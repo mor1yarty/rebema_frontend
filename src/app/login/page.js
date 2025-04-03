@@ -4,17 +4,39 @@ import { useState } from 'react';
 import './login.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // ログイン処理を実装（APIリクエストなど）
+    setIsLoading(true);
+    setLoginError('');
+    
+    // ダミー認証処理 - 実際のAPIができるまでの仮実装
     console.log('ログイン処理:', { email, password });
+    
+    // ダミー認証の例 - 何か入力されていればログイン成功とする
+    if (email && password) {
+      // 成功時の処理 - マイページへリダイレクト
+      setTimeout(() => {
+        setIsLoading(false);
+        router.push('/mypage');
+      }, 1000); // 1秒の遅延を追加してローディング表示のデモ
+    } else {
+      // 失敗時の処理
+      setTimeout(() => {
+        setIsLoading(false);
+        setLoginError('メールアドレスとパスワードを入力してください');
+      }, 1000);
+    }
   };
 
   return (
@@ -70,12 +92,16 @@ export default function Login() {
               />
             </div>
 
+            {/* エラーメッセージ表示 */}
+            {loginError && <div className="error-message">{loginError}</div>}
+
             {/* ログインボタン */}
             <button
               type="submit"
               className="login-button"
+              disabled={isLoading}
             >
-              Log In
+              {isLoading ? 'ログイン中...' : 'Log In'}
             </button>
           </form>
         </div>
