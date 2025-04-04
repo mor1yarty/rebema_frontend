@@ -1,132 +1,16 @@
 /* Mypage styles */
 
-.mypage-container {
-  background-color: #F5F6FB;
-  min-height: 100vh;
+.page-container {
   display: flex;
-}
-
-/* Sidebar styles - reusing from ranking page */
-.sidebar {
-  width: 262px;
-  background-color: #fff;
-  box-shadow: 3px 4px 4px 0px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  padding: 22px 0;
-  gap: 8px;
-  position: sticky;
-  top: 0;
+  width: 100%;
   height: 100vh;
-  overflow-y: auto;
-}
-
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 8px 8px 24px;
-}
-
-.logo-badge {
-  background-color: #1F47F7;
-  border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-}
-
-.logo-text {
-  color: #1F47F7;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.tabs {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 0 16px;
-  gap: 4px;
-}
-
-.tab {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px;
-  border-radius: 4px;
-  color: rgba(51, 51, 51, 0.5);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.tab.active {
-  color: #1F47F7;
-  border-right: 4px solid #1F47F7;
-}
-
-.profile-section {
-  margin-top: auto;
-  padding: 0 16px;
-}
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
   background-color: #F5F6FB;
-  border: 1px solid rgba(51, 51, 51, 0.04);
-  border-radius: 8px;
-  gap: 12px;
 }
 
-.profile-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #D9D9D9;
-  object-fit: cover;
-}
-
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.profile-name-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.profile-name {
-  font-weight: 700;
-  font-size: 14px;
-  color: #333;
-}
-
-.level-badge {
-  background-color: #FFE9D4;
-  border-radius: 100px;
-  padding: 2px 11px;
-  font-size: 14px;
-  color: rgba(51, 51, 51, 0.7);
-}
-
-.profile-department {
-  font-size: 12px;
-  color: rgba(51, 51, 51, 0.5);
-}
-
-/* Main content styles */
+/* Main content styles - specific to mypage */
 .main-content {
   flex: 1;
-  padding: 64px 160px 120px;
+  padding: 48px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -209,7 +93,7 @@
 
 .exp-text {
   margin-top: 4px;
-  font-size: 11px;
+  font-size: 16px;
   color: #494949;
   text-align: center;
 }
@@ -230,11 +114,11 @@
   align-items: center;
   gap: 9px;
   padding: 4px 0;
-  width: 100px;
+  width: 120px;
 }
 
 .stat-label {
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 700;
   color: #494949;
   text-align: center;
@@ -253,334 +137,11 @@
   background-color: #000;
 }
 
-/* Knowledge list styles */
-.knowledge-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 24px 32px;
-  background-color: #FDFDFD;
-  border-radius: 16px;
-}
+/* Import Knowledge component styles */
+@import url('../components/knowledge/KnowledgeList.css');
 
-.knowledge-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.knowledge-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: rgba(51, 51, 51, 0.8);
-  margin: 0;
-}
-
-.create-button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 16px;
-  background-color: #1F47F7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.create-button:hover {
-  background-color: #0035E0;
-}
-
-.knowledge-items {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.knowledge-item {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  background-color: #fff;
-  border: 1px solid rgba(19, 19, 19, 0.08);
-  border-radius: 8px;
-  gap: 16px;
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.3s;
-}
-
-.knowledge-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.knowledge-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  font-size: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.knowledge-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.knowledge-title-text {
-  font-size: 18px;
-  font-weight: 700;
-  color: rgba(19, 19, 19, 0.8);
-}
-
-.knowledge-category {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.category-label {
-  font-size: 16px;
-  font-weight: 500;
-  color: #000;
-}
-
-.category-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  background-color: #DDF4FF;
-  border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.category-icon {
-  font-size: 14px;
-}
-
-.knowledge-meta {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  gap: 8px;
-}
-
-.knowledge-author {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.author-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: #9B9B9B;
-}
-
-.author-name {
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(19, 19, 19, 0.8);
-}
-
-.knowledge-views {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  justify-content: flex-end;
-}
-
-.views-icon {
-  font-size: 14px;
-  color: #333;
-}
-
-.views-count {
-  font-size: 12px;
-  font-weight: 500;
-  color: #333;
-}
-
-/* Modal styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background-color: white;
-  border-radius: 16px;
-  padding: 24px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.modal-header h2 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #333;
-  margin: 0;
-}
-
-.close-button {
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #333;
-  cursor: pointer;
-}
-
-/* Create knowledge form */
-.create-knowledge-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group label {
-  font-size: 14px;
-  font-weight: 700;
-  color: #333;
-}
-
-.form-group input, 
-.form-group select, 
-.form-group textarea {
-  padding: 12px;
-  border: 1px solid rgba(51, 51, 51, 0.2);
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-  margin-top: 24px;
-}
-
-.cancel-button {
-  padding: 10px 16px;
-  background: none;
-  border: 1px solid rgba(51, 51, 51, 0.2);
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.submit-button {
-  padding: 10px 16px;
-  background-color: #1F47F7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #0035E0;
-}
-
-/* Knowledge detail */
-.knowledge-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.knowledge-detail-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.detail-category {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.detail-author {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.knowledge-detail-content {
-  font-size: 16px;
-  line-height: 1.5;
-  color: #333;
-}
-
-.knowledge-detail-content ul {
-  margin: 16px 0;
-  padding-left: 24px;
-}
-
-.knowledge-detail-stats {
-  display: flex;
-  gap: 24px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(51, 51, 51, 0.1);
-}
-
-.stats-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.stats-icon {
-  font-size: 18px;
-}
-
-.stats-value {
-  font-size: 14px;
-  color: #333;
-}
-
-/* Responsive design */
+/* Responsive design - specific to mypage */
 @media (max-width: 1200px) {
-  .main-content {
-    padding: 32px 64px 64px;
-  }
-  
   .user-info-card {
     flex-direction: column;
     padding: 24px;
@@ -591,60 +152,9 @@
   }
 }
 
-@media (max-width: 768px) {
-  .mypage-container {
-    flex-direction: column;
-  }
-  
-  .sidebar {
-    width: 100%;
-    padding: 16px 0;
-    position: static;
-    height: auto;
-  }
-  
-  .tabs {
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 0;
-  }
-  
-  .tab {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .tab.active {
-    border-right: none;
-    border-bottom: 4px solid #1F47F7;
-  }
-  
+/* モバイル表示用スタイル */
+@media only screen and (max-width: 768px) {
   .main-content {
-    padding: 24px 16px 64px;
-  }
-  
-  .knowledge-header {
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .create-button {
-    width: 100%;
-  }
-  
-  .knowledge-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .knowledge-meta {
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .modal-content {
-    width: 95%;
-    padding: 16px;
+    padding: 24px 16px;
   }
 }

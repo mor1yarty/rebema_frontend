@@ -1,0 +1,414 @@
+/* 共通スタイル定義 */
+
+:root {
+  /* カラーパレット */
+  --primary: #1F47F7;
+  --primary-hover: #0035E0;
+  --primary-light: rgba(31, 71, 247, 0.06);
+  --bg-color: #F5F6FB;
+  --white: #FFFFFF;
+  --black: #333333;
+  --black-80: rgba(51, 51, 51, 0.8);
+  --black-50: rgba(51, 51, 51, 0.5);
+  --error: #EC0000;
+  --level-color: #CB831E;
+  --level-badge-bg: #FFE9D4;
+  --border-light: rgba(51, 51, 51, 0.08);
+  
+  /* フォントサイズ */
+  --fs-xxl: 61px;
+  --fs-xl: 48px;
+  --fs-lg: 36px;
+  --fs-md: 24px;
+  --fs-rg: 18px;
+  --fs-sm: 16px;
+  --fs-xs: 14px;
+  --fs-xxs: 12px;
+  
+  /* スペーシング */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  
+  /* その他 */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --sidebar-width: 262px;
+}
+
+/* ベーススタイル */
+body {
+  background-color: var(--bg-color);
+  color: var(--black);
+  font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;
+}
+
+/* レイアウト系クラス */
+.page-container {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+  padding: 64px 160px 120px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxl);
+}
+
+/* サイドバースタイル */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--white);
+  box-shadow: 3px 4px 4px 0px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 0;
+  gap: var(--space-xs);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-xs) var(--space-xs) 24px;
+}
+
+.logo-badge {
+  background-color: var(--primary);
+  border-radius: var(--border-radius-md);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  padding: var(--space-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.logo-text {
+  color: var(--primary);
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 16px;
+  gap: var(--space-xxs);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  padding: var(--space-xs);
+  border-radius: var(--border-radius-sm);
+  color: var(--black-50);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tab.active {
+  color: var(--primary);
+  border-right: 4px solid var(--primary);
+}
+
+.profile-section {
+  margin-top: auto;
+  padding: 0 16px;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: var(--bg-color);
+  border: 1px solid rgba(51, 51, 51, 0.04);
+  border-radius: var(--border-radius-md);
+  gap: var(--space-sm);
+}
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  object-fit: cover;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
+
+.profile-name-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-name {
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  color: var(--black);
+}
+
+.level-badge {
+  background-color: var(--level-badge-bg);
+  border-radius: 100px;
+  padding: 2px 11px;
+  font-size: var(--fs-xs);
+  color: rgba(51, 51, 51, 0.7);
+}
+
+.profile-department {
+  font-size: var(--fs-xxs);
+  color: var(--black-50);
+}
+
+/* カード・リスト系クラス */
+.card {
+  background-color: var(--white);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-lg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.card-title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--black-80);
+  margin: 0;
+}
+
+/* ボタン系クラス */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  border: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--black);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* フォーム系クラス */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.input-label {
+  display: flex;
+  margin-bottom: var(--space-xs);
+}
+
+.label-text {
+  color: var(--black);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+}
+
+.required-mark {
+  color: var(--error);
+  font-size: var(--fs-xxs);
+  margin-left: var(--space-xs);
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-light);
+  font-size: var(--fs-xs);
+  transition: border 0.2s;
+  color: var(--black);
+}
+
+.input-field:focus {
+  border: 4px solid var(--primary);
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: rgba(19, 19, 19, 0.5);
+}
+
+/* モーダル系クラス */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--white);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-lg);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.modal-header h2 {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--black);
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: var(--fs-md);
+  color: var(--black);
+  cursor: pointer;
+}
+
+/* ヘッダースタイル */
+.header {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border-light);
+  padding: var(--space-md) var(--space-xxl);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: none; /* デフォルトでは非表示、モバイルでのみ表示 */
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-button {
+  color: var(--black);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs);
+  text-decoration: none;
+}
+
+.page-title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--black);
+}
+
+.header-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 32px 64px 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    display: none; /* モバイルでは非表示 */
+  }
+  
+  .header {
+    display: block; /* モバイルで表示 */
+  }
+  
+  .main-content {
+    padding: 24px 16px 64px;
+  }
+  
+  /* カードスタイルの調整 */
+  .card {
+    padding: var(--space-md);
+  }
+  
+  /* フォーム要素の調整 */
+  .form-group {
+    gap: var(--space-xxs);
+  }
+  
+  /* ボタンの調整 */
+  .btn {
+    width: 100%;
+  }
+  
+  /* モーダルの調整 */
+  .modal-content {
+    width: 95%;
+    padding: var(--space-md);
+  }
+}
