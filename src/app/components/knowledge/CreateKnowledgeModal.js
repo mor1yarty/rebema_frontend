@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * ナレッジ作成モーダルコンポーネント
@@ -14,6 +14,7 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
     category: 'メール',
     content: ''
   });
+  const [isClosing, setIsClosing] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,13 +29,35 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
     onSubmit(formData);
   };
 
+  // 閉じるアニメーションを制御する関数
+  const handleClose = () => {
+    setIsClosing(true);
+    // アニメーション完了後に実際に閉じる
+    setTimeout(() => {
+      onClose();
+    }, 300); // CSSのアニメーション時間と合わせる
+  };
+
+  // ESCキーでモーダルを閉じる
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+    <div className={`modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
+      <div className={`modal-content ${isClosing ? 'closing' : ''}`} onClick={e => e.stopPropagation()}>
         <div className="create-knowledge-form">
           <div className="modal-header">
             <h2>新規ナレッジ作成</h2>
-            <button className="close-button" onClick={onClose}>×</button>
+            <button className="close-button" onClick={handleClose}>×</button>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -76,7 +99,7 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
               ></textarea>
             </div>
             <div className="form-buttons">
-              <button type="button" className="cancel-button" onClick={onClose}>キャンセル</button>
+              <button type="button" className="cancel-button" onClick={handleClose}>キャンセル</button>
               <button type="submit" className="submit-button">作成</button>
             </div>
           </form>

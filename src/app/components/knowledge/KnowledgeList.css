@@ -1,215 +1,7 @@
 /* Knowledge list styles */
+/* ...省略（前半部分は同じ）... */
 
-/* Knowledge list container */
-.knowledge-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 24px 32px;
-  background-color: #FDFDFD;
-  border-radius: 16px;
-}
-
-/* Knowledge header */
-.knowledge-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  flex-direction: row;
-}
-
-.knowledge-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: rgba(51, 51, 51, 0.8);
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-}
-
-.create-button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 16px;
-  background-color: #1F47F7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.create-button:hover {
-  background-color: #0035E0;
-}
-
-/* Knowledge items */
-.knowledge-items {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.knowledge-item {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  background-color: #fff;
-  border: 1px solid rgba(19, 19, 19, 0.08);
-  border-radius: 8px;
-  gap: 16px;
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.3s;
-}
-
-.knowledge-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.knowledge-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  font-size: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.knowledge-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.knowledge-title-text {
-  font-size: 18px;
-  font-weight: 700;
-  color: rgba(19, 19, 19, 0.8);
-  font-family: 'Noto Sans JP', sans-serif;
-}
-
-.knowledge-category {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.category-label {
-  font-size: 16px;
-  font-weight: 500;
-  color: #000;
-}
-
-.category-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  background-color: #DDF4FF;
-  border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.category-icon {
-  font-size: 14px;
-}
-
-.knowledge-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.knowledge-author {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.author-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: #9B9B9B;
-}
-
-.author-name {
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(19, 19, 19, 0.8);
-}
-
-.knowledge-views {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  justify-content: flex-end;
-}
-
-.views-icon {
-  font-size: 14px;
-  color: #333;
-}
-
-.views-count {
-  font-size: 12px;
-  font-weight: 500;
-  color: #333;
-}
-
-/* No knowledge message */
-.no-knowledge-message {
-  padding: 24px;
-  text-align: center;
-  color: #666;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-/* Search styles */
-.search-section {
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.search-bar {
-  background-color: #F5F6FB;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  gap: 17px;
-  padding: 7px 18px;
-  width: 100%;
-}
-
-.search-icon {
-  color: #333;
-  font-size: 20px;
-}
-
-.search-input {
-  border: none;
-  background-color: transparent;
-  flex: 1;
-  font-size: 20px;
-  font-family: 'Noto Sans JP', sans-serif;
-  color: #333;
-  outline: none;
-}
-
-.search-input::placeholder {
-  color: #333;
-}
-
-/* Modal styles */
+/* Modal styles - 右からスライドイン表示に変更 */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -218,20 +10,77 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end; /* 右側に配置 */
+  align-items: stretch; /* 縦方向に伸ばす */
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+  height: 100%; /* 高さを100%に設定 */
+}
+
+.modal-overlay.closing {
+  animation: fadeOut 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .modal-content {
   background-color: white;
-  border-radius: 12px;
-  padding: 32px;
+  width: 50%; /* 画面の半分の幅 */
   max-width: 800px;
-  width: 90%;
-  max-height: 85vh;
+  height: 100%; /* 画面の高さいっぱい */
+  max-height: 100vh; /* 最大高さを画面の高さに設定 */
+  padding: 32px;
   overflow-y: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content.closing {
+  animation: slideOut 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Knowledge detail within modal */
+.knowledge-detail {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 詳細内容も高さ100%に */
 }
 
 .modal-header {
@@ -310,6 +159,8 @@
   margin-bottom: 24px;
   color: rgba(0, 0, 0, 0.8);
   line-height: 1.6;
+  flex: 1; /* コンテンツ部分を拡大して余白を埋める */
+  overflow-y: auto; /* 内容が多い場合はスクロール */
 }
 
 .content-h1 {
@@ -350,6 +201,7 @@
   padding-top: 16px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.7);
+  margin-top: auto; /* 常に下部に配置 */
 }
 
 .stats-item {
@@ -367,7 +219,13 @@
 .create-knowledge-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  height: 100%; /* フォームも高さ100%に */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* フォームを拡大して余白を埋める */
 }
 
 .form-group {
@@ -383,12 +241,21 @@
 }
 
 .form-group input, 
-.form-group select, 
+.form-group select {
+  padding: 12px;
+  border: 1px solid rgba(51, 51, 51, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
 .form-group textarea {
   padding: 12px;
   border: 1px solid rgba(51, 51, 51, 0.2);
   border-radius: 8px;
   font-size: 14px;
+  flex: 1; /* テキストエリアを拡大して余白を埋める */
+  min-height: 150px; /* 最小の高さを設定 */
+  resize: none; /* リサイズ無効化 */
 }
 
 .form-buttons {
@@ -422,11 +289,20 @@
 }
 
 /* Responsive design for modal */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .modal-content {
-    width: 95%;
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 24px 16px;
+  }
+  
+  .modal-content {
+    width: 100%;
     padding: 16px;
-    max-height: 90vh;
   }
   
   .modal-title-container {

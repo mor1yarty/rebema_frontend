@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 /**
  * ナレッジ詳細モーダルコンポーネント
  * @param {Object} props
@@ -7,6 +9,30 @@
  * @param {function} props.onClose - モーダルを閉じる際のコールバック
  */
 export default function KnowledgeModal({ content, onClose }) {
+  const [isClosing, setIsClosing] = useState(false);
+
+  // 閉じるアニメーションを制御する関数
+  const handleClose = () => {
+    setIsClosing(true);
+    // アニメーション完了後に実際に閉じる
+    setTimeout(() => {
+      onClose();
+    }, 300); // CSSのアニメーション時間と合わせる
+  };
+
+  // ESCキーでモーダルを閉じる
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
   // Markdown形式のコンテンツを変換してレンダリングする関数
   const renderContent = () => {
     if (!content.content) {
@@ -57,8 +83,8 @@ export default function KnowledgeModal({ content, onClose }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+    <div className={`modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
+      <div className={`modal-content ${isClosing ? 'closing' : ''}`} onClick={e => e.stopPropagation()}>
         <div className="knowledge-detail">
           <div className="modal-header">
             <div className="modal-title-container">
@@ -70,7 +96,7 @@ export default function KnowledgeModal({ content, onClose }) {
               </div>
               <h2 className="modal-title">{content.title}</h2>
             </div>
-            <button className="close-button" onClick={onClose}>×</button>
+            <button className="close-button" onClick={handleClose}>×</button>
           </div>
           
           <div className="knowledge-detail-meta">
