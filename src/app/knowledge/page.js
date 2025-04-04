@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import { KnowledgeList, SearchBar, CreateKnowledgeModal } from '../components/knowledge';
 import './knowledge.css';
 
 // Mock data for knowledge entries (using the data from the design)
@@ -127,8 +127,7 @@ const userData = {
 
 export default function KnowledgePage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   
   // Filter knowledge items based on search query
   const filteredKnowledge = searchQuery
@@ -138,16 +137,21 @@ export default function KnowledgePage() {
       )
     : knowledgeData;
   
-  // Function to open modal with content
-  const openModal = (content) => {
-    setModalContent(content);
-    setIsModalOpen(true);
+  // Function to handle search query change
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
   };
 
-  // Function to close modal
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalContent(null);
+  // Function to handle create button click
+  const handleCreateClick = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  // Function to handle form submission
+  const handleSubmit = (formData) => {
+    // 実際のアプリケーションではAPIを呼び出してデータを保存します
+    console.log('Form submitted:', formData);
+    setIsCreateModalOpen(false);
   };
   
   return (
@@ -161,139 +165,27 @@ export default function KnowledgePage() {
       {/* メインコンテンツ */}
       <div className="main-content">
         {/* 検索バー */}
-        <div className="search-section">
-          <div className="search-bar">
-            <span className="search-icon">🔍</span>
-            <input 
-              type="text" 
-              className="search-input" 
-              placeholder="ナレッジを検索" 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </div>
+        <SearchBar 
+          searchQuery={searchQuery} 
+          onSearchChange={handleSearchChange} 
+        />
         
-        {/* ナレッジセクション */}
-        <div className="knowledge-section">
-          <div className="knowledge-list-header">
-            <h2 className="knowledge-list-title">PV数が高いナレッジ 👏</h2>
-          </div>
-          
-          <div className="knowledge-list">
-            <div className="knowledge-items">
-              {filteredKnowledge.map((item) => (
-                <div 
-                  key={item.id} 
-                  className="knowledge-item" 
-                  onClick={() => openModal(item)}
-                >
-                  <div className="knowledge-icon" style={{ backgroundColor: item.iconBgColor }}>
-                    <span>{item.icon}</span>
-                  </div>
-                  
-                  <div className="knowledge-content">
-                    <div className="knowledge-title-text">{item.title}</div>
-                    <div className="knowledge-category">
-                      <span className="category-label">配信手法</span>
-                      <div className="category-badge">
-                        <span className="category-icon">✉️</span>
-                        <span>{item.category}</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="knowledge-meta">
-                    <div className="knowledge-author">
-                      <div className="author-avatar"></div>
-                      <span className="author-name">{item.author}</span>
-                    </div>
-                    <div className="knowledge-views">
-                      <span className="views-icon">👁️</span>
-                      <span className="views-count">{item.views}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* ナレッジリスト */}
+        <KnowledgeList 
+          knowledgeData={filteredKnowledge}
+          title="PV数が高いナレッジ 👏"
+          showCreateButton={true}
+          onCreateClick={handleCreateClick}
+          isFiltered={searchQuery !== ''}
+        />
       </div>
       
-      {/* モーダル */}
-      {isModalOpen && modalContent && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="knowledge-detail">
-              <div className="modal-header">
-                <div className="modal-title-container">
-                  <div 
-                    className="modal-icon" 
-                    style={{ backgroundColor: modalContent.iconBgColor }}
-                  >
-                    <span>{modalContent.icon}</span>
-                  </div>
-                  <h2 className="modal-title">{modalContent.title}</h2>
-                </div>
-                <button className="close-button" onClick={closeModal}>×</button>
-              </div>
-              
-              <div className="knowledge-detail-meta">
-                <div className="detail-category">
-                  <span className="category-label">配信手法</span>
-                  <span className="category-badge">
-                    <span className="category-icon">✉️</span>
-                    {modalContent.category}
-                  </span>
-                </div>
-                <div className="detail-author">
-                  <div className="author-avatar"></div>
-                  <span className="author-name">{modalContent.author}</span>
-                </div>
-              </div>
-              
-              <div className="knowledge-detail-content">
-                {modalContent.content.split('\n').map((paragraph, idx) => {
-                  // h1見出し (# ではじまる)
-                  if (paragraph.trim().startsWith('# ')) {
-                    return <h1 key={idx} className="content-h1">{paragraph.trim().substring(2)}</h1>;
-                  }
-                  // h2見出し (## ではじまる)
-                  else if (paragraph.trim().startsWith('## ')) {
-                    return <h2 key={idx} className="content-h2">{paragraph.trim().substring(3)}</h2>;
-                  }
-                  // リスト項目 (- ではじまる)
-                  else if (paragraph.trim().startsWith('- ')) {
-                    return <li key={idx} className="content-list-item">{paragraph.trim().substring(2)}</li>;
-                  }
-                  // 数字リスト項目 (1. ではじまる)
-                  else if (/^\d+\.\s/.test(paragraph.trim())) {
-                    return <li key={idx} className="content-list-item numbered">{paragraph.trim().replace(/^\d+\.\s/, '')}</li>;
-                  }
-                  // 空行
-                  else if (paragraph.trim() === '') {
-                    return <br key={idx} />;
-                  }
-                  // 通常段落
-                  else {
-                    return <p key={idx} className="content-paragraph">{paragraph}</p>;
-                  }
-                })}
-              </div>
-              
-              <div className="knowledge-detail-stats">
-                <div className="stats-item">
-                  <span className="stats-icon">👁️</span>
-                  <span className="stats-value">{modalContent.views} 閲覧</span>
-                </div>
-                <div className="stats-item">
-                  <span className="stats-icon">📅</span>
-                  <span className="stats-value">{modalContent.createdAt} 作成</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* 新規作成モーダル */}
+      {isCreateModalOpen && (
+        <CreateKnowledgeModal 
+          onClose={() => setIsCreateModalOpen(false)}
+          onSubmit={handleSubmit}
+        />
       )}
     </div>
   );
