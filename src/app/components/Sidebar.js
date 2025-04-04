@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Logo from './Logo';
 
 export default function Sidebar({ userData }) {
   const pathname = usePathname();
@@ -17,10 +18,7 @@ export default function Sidebar({ userData }) {
     <div className="sidebar">
       {/* ロゴ */}
       <div className="sidebar-logo">
-        <div className="logo-badge">
-          <span style={{ color: 'white', fontSize: '20px' }}>🔥</span>
-        </div>
-        <span className="logo-text">Rebema</span>
+        <Logo size="small" />
       </div>
       
       {/* タブメニュー */}
