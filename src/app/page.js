@@ -26,13 +26,15 @@ export default function Home() {
           </div>
         </div>
         
-        {/* ログインボタン */}
-        <Link 
-          href="/login"
-          className="btn btn-primary w-[209px]"
-        >
-          Log In
-        </Link>
+        {/* ログインボタン - キャッチコピーと同じ縦の大きさにする */}
+        <div className="py-[98px] flex flex-col justify-center" style={{ height: '216px' }}>
+          <Link 
+            href="/login"
+            className="btn btn-primary w-[209px]"
+          >
+            Log In
+          </Link>
+        </div>
       </div>
     </div>
   );
