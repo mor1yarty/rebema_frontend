@@ -181,17 +181,25 @@
 }
 
 .search-bar {
-  background-color: #F5F6FB;
+  background-color: #FFFFFF;
   border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   gap: 17px;
   padding: 7px 18px;
   width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.search-bar:hover, .search-bar:focus-within {
+  border-color: rgba(31, 71, 247, 0.4);
+  box-shadow: 0 2px 8px rgba(31, 71, 247, 0.15);
 }
 
 .search-icon {
-  color: #333;
+  color: #666;
   font-size: 20px;
 }
 
@@ -206,7 +214,7 @@
 }
 
 .search-input::placeholder {
-  color: #333;
+  color: #999;
 }
 
 /* Modal styles - 右からスライドイン表示に変更 */
