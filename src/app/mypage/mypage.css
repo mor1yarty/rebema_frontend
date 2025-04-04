@@ -146,6 +146,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-direction: row; /* 明示的に横並びを指定 */
 }
 
 .knowledge-title {
@@ -247,11 +248,13 @@
 }
 
 .knowledge-meta {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  gap: 8px;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  height: 100% !important;
+  gap: 8px !important;
+  align-items: flex-start !important; /* 左寄せを強制 */
+  text-align: left !important;
 }
 
 .knowledge-author {
@@ -274,10 +277,11 @@
 }
 
 .knowledge-views {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  justify-content: flex-end;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  justify-content: flex-start !important; /* 左寄せを強制 */
+  text-align: left !important;
 }
 
 .views-icon {
@@ -447,7 +451,8 @@
   }
 }
 
-@media (max-width: 768px) {
+/* モバイル表示用スタイル */
+@media only screen and (max-width: 768px) {
   .tab {
     flex-direction: column;
     text-align: center;
@@ -458,9 +463,8 @@
     border-bottom: 4px solid #1F47F7;
   }
 
-  
   .knowledge-header {
-    flex-direction: column;
+    flex-direction: column !important;
     gap: 16px;
   }
   
@@ -474,9 +478,15 @@
   }
   
   .knowledge-meta {
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
+    flex-direction: row !important; /* 横並びに変更 */
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  
+  /* knowledge-viewsはモバイル表示時のみ右寄せにする */
+  .knowledge-views {
+    justify-content: flex-end !important;
   }
   
   .modal-content {
