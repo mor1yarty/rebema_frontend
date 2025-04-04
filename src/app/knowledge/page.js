@@ -176,8 +176,8 @@ export default function KnowledgePage() {
         
         {/* ナレッジセクション */}
         <div className="knowledge-section">
-          <div className="knowledge-header">
-            <h2 className="knowledge-title">PV数が高いナレッジ 👏</h2>
+          <div className="knowledge-list-header">
+            <h2 className="knowledge-list-title">PV数が高いナレッジ 👏</h2>
           </div>
           
           <div className="knowledge-list">
