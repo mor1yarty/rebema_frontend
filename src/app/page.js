@@ -1,95 +1,43 @@
-import Image from "next/image";
-import Link from "next/link";
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Home() {
+  // サーバーサイドリダイレクトはコメントアウトしています
+  // 即時リダイレクトを有効にしたい場合はコメントを外してください
+  // redirect('/login');
+  
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <Link
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="/login"
-          >
-            Login
-          </Link>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-[#F5F6FB] flex flex-col items-center justify-center p-4 sm:p-8 md:p-16 lg:p-[64px_160px_120px]">
+      <div className="flex flex-col items-center w-full max-w-4xl">
+        {/* Figmaデザインの構造に合わせて配置 */}
+        
+        <div className="flex flex-col items-center mb-20 w-full">
+          {/* キャッチコピーをロゴの上に配置し、幅を固定して左揃え */}
+          <div className="w-[292px] mb-10">
+            <h2 className="text-5xl font-bold text-[#333333] leading-[1.5em] text-left">カク、</h2>
+            <h2 className="text-5xl font-bold text-[#333333] leading-[1.5em] text-left">ヨム、</h2>
+            <h2 className="text-5xl font-bold text-[#333333] leading-[1.5em] text-left">ツナガル。</h2>
+          </div>
+          
+          {/* ロゴを中央に配置 */}
+          <div className="flex justify-center w-full">
+            <div className="flex items-center gap-3">
+              <div className="w-[53px] h-[53px] bg-[#1F47F7] rounded-[12px] border-2 border-white/50 flex items-center justify-center">
+                <div style={{ color: 'white', fontSize: '24px' }}>🔥</div>
+              </div>
+              <h1 className="text-[#1F47F7] text-[54px] font-bold font-['Noto_Sans']">Rebema</h1>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        
+        {/* ログインボタン */}
+        <Link 
+          href="/login"
+          className="bg-[#1F47F7] text-white font-bold py-2 px-4 rounded-[8px] text-center w-[209px] h-[40px] flex items-center justify-center hover:bg-[#0035E0] transition-colors font-['Noto_Sans_JP'] text-sm"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Log In
+        </Link>
+      </div>
     </div>
   );
 }

@@ -95,13 +95,13 @@ export default function Login() {
             {/* エラーメッセージ表示 */}
             {loginError && <div className="error-message">{loginError}</div>}
 
-            {/* ログインボタン */}
+            {/* ログインボタン - テキストをContinueに変更 */}
             <button
               type="submit"
               className="login-button"
               disabled={isLoading}
             >
-              {isLoading ? 'ログイン中...' : 'Log In'}
+              {isLoading ? 'ログイン中...' : 'Continue'}
             </button>
           </form>
         </div>
