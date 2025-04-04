@@ -1,142 +1,21 @@
 /* Knowledge list page styles */
 
 .knowledge-container {
-  background-color: #F5F6FB;
-  min-height: 100vh;
   display: flex;
 }
 
-/* Sidebar styles */
-.sidebar {
-  width: 262px;
-  background-color: #fff;
-  box-shadow: 3px 4px 4px 0px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  padding: 22px 0;
-  gap: 8px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-}
-
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 8px 8px 24px;
-}
-
-.logo-badge {
-  background-color: #1F47F7;
-  border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-}
-
-.logo-text {
-  color: #1F47F7;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.tabs {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 0 16px;
-  gap: 4px;
-}
-
-.tab {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px;
-  border-radius: 4px;
-  color: rgba(51, 51, 51, 0.5);
-  font-weight: 700;
-  text-decoration: none;
-  width: 100%;
-}
-
-.tab.active {
-  color: #1F47F7;
-  border-right: 4px solid #1F47F7;
-}
-
-.profile-section {
-  margin-top: auto;
-  padding: 0 16px;
-}
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  background-color: #F5F6FB;
-  border: 1px solid rgba(51, 51, 51, 0.04);
-  border-radius: 8px;
-  gap: 12px;
-}
-
-.profile-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #D9D9D9;
-  background-image: url('/avatar1.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.profile-name-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.profile-name {
-  font-weight: 700;
-  font-size: 14px;
-  color: #333;
-  font-family: 'Noto Sans JP', sans-serif;
-}
-
-.level-badge {
-  background-color: #FFE9D4;
-  border-radius: 100px;
-  padding: 2px 11px;
-  font-size: 14px;
-  color: rgba(51, 51, 51, 0.7);
-  font-family: 'Noto Sans JP', sans-serif;
-}
-
-.profile-department {
-  font-size: 12px;
-  color: rgba(51, 51, 51, 0.5);
-  font-family: 'Noto Sans JP', sans-serif;
-}
-
-/* Main content styles */
+/* Main content styles - specific to knowledge page */
 .main-content {
-  flex: 1;
-  padding: 64px 160px 120px;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 48px;
+}
+
+/* Only keeping profile avatar specific styling */
+.profile-avatar {
+  background-image: url('/avatar1.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 /* Search section */
@@ -325,28 +204,10 @@
   color: #333;
 }
 
-/* Modal styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
+/* Modal styles - specific to knowledge page */
 .modal-content {
-  background-color: white;
-  border-radius: 16px;
-  padding: 24px;
-  width: 90%;
   max-width: 800px;
   max-height: 85vh;
-  overflow-y: auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -508,31 +369,8 @@
   }
 }
 
-/* Responsive styles */
-@media (max-width: 1200px) {
-  .main-content {
-    padding: 32px 64px 64px;
-  }
-}
-
+/* Responsive styles - specific to knowledge page */
 @media (max-width: 768px) {
-  .knowledge-container {
-    flex-direction: column;
-  }
-  
-  .sidebar {
-    width: 100%;
-    padding: 16px 0;
-    position: static;
-    height: auto;
-  }
-  
-  .tabs {
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 0;
-  }
-  
   .tab {
     flex-direction: column;
     text-align: center;
@@ -541,10 +379,6 @@
   .tab.active {
     border-right: none;
     border-bottom: 4px solid #1F47F7;
-  }
-  
-  .main-content {
-    padding: 24px 16px 64px;
   }
   
   .knowledge-item {
