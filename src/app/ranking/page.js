@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import './ranking.css';
@@ -13,7 +12,7 @@ const rankingData = [
     id: 1, 
     position: '1st', 
     name: '中村千佳', 
-    department: 'デジマ', 
+    department: 'デジタルマーケティング部', 
     level: 34, 
     avatar: '/avatar1.jpg' 
   },
@@ -21,7 +20,7 @@ const rankingData = [
     id: 2, 
     position: '2nd', 
     name: '山口悠真', 
-    department: 'マーケティング', 
+    department: 'マーケティング部', 
     level: 31, 
     avatar: '/avatar2.jpg' 
   },
@@ -29,7 +28,7 @@ const rankingData = [
     id: 3, 
     position: '3rd', 
     name: '川谷陸', 
-    department: 'エンジニア', 
+    department: 'エンジニアリング部', 
     level: 27, 
     avatar: '/avatar3.jpg' 
   },
@@ -37,7 +36,7 @@ const rankingData = [
     id: 4, 
     position: '4th', 
     name: '田中一郎', 
-    department: 'デザイン', 
+    department: 'デザイン部', 
     level: 24, 
     avatar: '/avatar4.jpg' 
   },
@@ -45,11 +44,19 @@ const rankingData = [
     id: 5, 
     position: '5th', 
     name: '佐藤健太', 
-    department: 'マーケティング', 
+    department: 'マーケティング部', 
     level: 23, 
     avatar: '/avatar5.jpg' 
   },
 ];
+
+// 順位に応じたCSSクラスを取得する関数
+const getRankingClass = (index) => {
+  if (index === 0) return 'first';
+  if (index === 1) return 'second';
+  if (index === 2) return 'third';
+  return '';
+};
 
 export default function Ranking() {
   // Get the top ranking user (1st position)
@@ -77,26 +84,34 @@ export default function Ranking() {
         <div className="rankings-list">
           {/* 1位のユーザー(特別デザイン) */}
           <div className="top-ranking-card">
-            <div className="ranking-position">{topUser.position}</div>
+            <div className={`ranking-position ${getRankingClass(0)}`}>{topUser.position}</div>
+            
             <div className="ranking-avatar-container">
               <div className="ranking-avatar" />
             </div>
+            
             <div className="top-user-info">
               <div className="top-user-name">{topUser.name}</div>
               <div className="top-user-department">{topUser.department}</div>
             </div>
+            
             <div className="top-user-level">Lv.{topUser.level}</div>
           </div>
           
           {/* 2位以下のユーザー */}
-          {otherUsers.map(user => (
+          {otherUsers.map((user, index) => (
             <div key={user.id} className="ranking-item">
-              <div className="ranking-position">{user.position}</div>
+              <div className={`ranking-position ${getRankingClass(index + 1)}`}>{user.position}</div>
+              
               <div className="ranking-avatar-container">
-                <div className="ranking-avatar" style={{ backgroundColor: user.id === 2 ? '#f0f0f0' : user.id === 3 ? '#e0e0e0' : '#d9d9d9' }} />
+                <div className="ranking-avatar" />
               </div>
-              <div className="ranking-user-name">{user.name}</div>
-              <div className="top-user-department">{user.department}</div>
+              
+              <div className="ranking-user-info">
+                <div className="ranking-user-name">{user.name}</div>
+                <div className="ranking-user-department">{user.department}</div>
+              </div>
+              
               <div className="ranking-user-level">Lv.{user.level}</div>
             </div>
           ))}

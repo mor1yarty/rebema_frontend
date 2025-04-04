@@ -1,42 +1,62 @@
 /* Ranking page styles */
 
-.ranking-container {
+.page-container {
   display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #F5F6FB;
+}
+
+.main-content {
+  flex: 1;
+  padding: 48px;
+  overflow-y: auto;
 }
 
 .rankings-list {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 24px;
   padding-bottom: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 共通のカラムレイアウト - 名前のブロック幅を大きく、レベルを右端に */
+.ranking-grid {
+  display: grid;
+  grid-template-columns: 120px 160px minmax(300px, 1fr) auto;
+  width: 100%;
+  align-items: center;
 }
 
 /* Top ranking card */
 .top-ranking-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 120px 160px minmax(300px, 1fr) auto;
+  padding: 32px;
   background-color: #fff;
   border-radius: 16px;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .ranking-position {
   font-size: 64px;
   font-weight: 900;
   color: #333;
-  text-align: center;
+  justify-self: center;
 }
 
 .ranking-avatar-container {
-  padding: 7px 22px;
-  width: 195px;
+  display: flex;
+  justify-content: center;
+  padding: 8px;
 }
 
 .ranking-avatar {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background-color: #D9D9D9;
   object-fit: cover;
@@ -45,43 +65,39 @@
 .top-user-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
+  padding-left: 16px;
 }
 
 .top-user-name {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 700;
   color: #494949;
-  text-align: center;
 }
 
 .top-user-department {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: #494949;
-  text-align: center;
 }
 
 .top-user-level {
-  font-size: 61px;
+  font-size: 48px;
   font-weight: 700;
   color: #CB831E;
-  padding: 8px 0;
-  width: 242px;
-  text-align: center;
+  justify-self: end;
+  padding-right: 20px;
 }
 
 /* Regular ranking items */
 .ranking-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 37px;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: 120px 160px minmax(300px, 1fr) auto;
+  padding: 16px 32px;
   background-color: #fff;
-  border-radius: 15px;
+  border-radius: 16px;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
 }
 
 .ranking-item .ranking-position {
@@ -89,28 +105,149 @@
   font-weight: 700;
 }
 
-.ranking-item .ranking-avatar-container {
-  padding: 3.5px 11px;
-  width: 99px;
-}
-
 .ranking-item .ranking-avatar {
   width: 80px;
   height: 80px;
 }
 
-.ranking-item .ranking-user-name {
+.ranking-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 16px;
+}
+
+.ranking-user-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.ranking-user-department {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+}
+
+.ranking-user-level {
   font-size: 36px;
   font-weight: 700;
   color: #333;
-  text-align: center;
+  justify-self: end;
+  padding-right: 20px;
 }
 
-.ranking-item .ranking-user-level {
-  font-size: 48px;
-  font-weight: 700;
-  color: #333;
-  padding: 7.5px 0;
-  width: 281px;
-  text-align: center;
+/* スペシャルメダル (1-3位) */
+.ranking-position.first {
+  color: #FFD700; /* 金 */
+}
+
+.ranking-position.second {
+  color: #C0C0C0; /* 銀 */
+}
+
+.ranking-position.third {
+  color: #CD7F32; /* 銅 */
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+  .top-ranking-card,
+  .ranking-item {
+    grid-template-columns: 100px 140px minmax(200px, 1fr) auto;
+  }
+  
+  .ranking-position {
+    font-size: 48px;
+  }
+  
+  .top-user-name {
+    font-size: 28px;
+  }
+  
+  .top-user-level {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 24px 16px;
+  }
+  
+  .top-ranking-card,
+  .ranking-item {
+    grid-template-columns: 80px 100px minmax(150px, 1fr) auto;
+    padding: 16px;
+    gap: 8px;
+  }
+  
+  .ranking-position {
+    font-size: 36px;
+  }
+  
+  .ranking-avatar {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .top-user-name {
+    font-size: 22px;
+  }
+  
+  .top-user-department {
+    font-size: 14px;
+  }
+  
+  .top-user-level {
+    font-size: 32px;
+  }
+  
+  .ranking-user-name {
+    font-size: 18px;
+  }
+  
+  .ranking-user-level {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 576px) {
+  .top-ranking-card,
+  .ranking-item {
+    grid-template-columns: 60px 80px minmax(120px, 1fr) auto;
+    padding: 12px;
+    gap: 4px;
+  }
+  
+  .ranking-position {
+    font-size: 28px;
+  }
+  
+  .ranking-avatar {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .top-user-name {
+    font-size: 18px;
+  }
+  
+  .top-user-department {
+    font-size: 12px;
+  }
+  
+  .top-user-level {
+    font-size: 24px;
+    padding-right: 10px;
+  }
+  
+  .ranking-user-name {
+    font-size: 16px;
+  }
+  
+  .ranking-user-level {
+    font-size: 22px;
+    padding-right: 10px;
+  }
 }
