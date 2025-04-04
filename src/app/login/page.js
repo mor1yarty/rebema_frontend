@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import './login.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Logo from '../components/Logo';
+import Header from '../components/Header';
 
 export default function Login() {
   const router = useRouter();
@@ -40,16 +41,16 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
+    <div className="page-container bg-login">
+      {/* モバイル用ヘッダー */}
+      <Header showBackButton={true} />
+      
       {/* メインコンテンツ */}
-      <div className="main-content">
-        <div className="form-container">
+      <div className="main-content flex items-center justify-center">
+        <div className="form-container card">
           {/* ロゴとタイトル */}
-          <div className="logo-section">
-            <div className="logo-icon">
-              <div style={{ color: 'white', fontSize: '24px' }}>🔥</div>
-            </div>
-            <h1 className="logo-text">Rebema</h1>
+          <div className="logo-section flex justify-center mb-12">
+            <Logo size="medium" />
           </div>
 
           {/* ログインフォーム */}
@@ -98,7 +99,7 @@ export default function Login() {
             {/* ログインボタン - テキストをContinueに変更 */}
             <button
               type="submit"
-              className="login-button"
+              className="btn btn-primary w-full"
               disabled={isLoading}
             >
               {isLoading ? 'ログイン中...' : 'Continue'}

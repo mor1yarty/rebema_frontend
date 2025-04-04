@@ -29,9 +29,9 @@
 }
 
 .logo-badge {
-  background-color: rgba(31, 71, 247, 0.06);
-  border: 1.6px solid rgba(31, 71, 247, 0.06);
+  background-color: #1F47F7;
   border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
   padding: 8px;
   display: flex;
   align-items: center;
@@ -40,16 +40,10 @@
   height: 36px;
 }
 
-.logo-icon {
-  color: #1F47F7;
-  font-size: 20px;
-}
-
 .logo-text {
   color: #1F47F7;
-  font-size: 21.4px;
+  font-size: 24px;
   font-weight: 700;
-  font-family: 'Noto Sans', sans-serif;
 }
 
 .tabs {

@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import Logo from './components/Logo';
 
 export default function Home() {
   // サーバーサイドリダイレクトはコメントアウトしています
@@ -21,19 +22,14 @@ export default function Home() {
           
           {/* ロゴを中央に配置 */}
           <div className="flex justify-center w-full">
-            <div className="flex items-center gap-3">
-              <div className="w-[53px] h-[53px] bg-[#1F47F7] rounded-[12px] border-2 border-white/50 flex items-center justify-center">
-                <div style={{ color: 'white', fontSize: '24px' }}>🔥</div>
-              </div>
-              <h1 className="text-[#1F47F7] text-[54px] font-bold font-['Noto_Sans']">Rebema</h1>
-            </div>
+            <Logo size="medium" />
           </div>
         </div>
         
         {/* ログインボタン */}
         <Link 
           href="/login"
-          className="bg-[#1F47F7] text-white font-bold py-2 px-4 rounded-[8px] text-center w-[209px] h-[40px] flex items-center justify-center hover:bg-[#0035E0] transition-colors font-['Noto_Sans_JP'] text-sm"
+          className="btn btn-primary w-[209px]"
         >
           Log In
         </Link>

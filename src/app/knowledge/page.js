@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import './knowledge.css';
 import Link from 'next/link';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import './knowledge.css';
 
 // Mock data for knowledge entries (using the data from the design)
 const knowledgeData = [
@@ -149,47 +151,12 @@ export default function KnowledgePage() {
   };
   
   return (
-    <div className="knowledge-container">
+    <div className="page-container">
       {/* サイドバー */}
-      <div className="sidebar">
-        {/* ロゴ */}
-        <div className="sidebar-logo">
-          <div className="logo-badge">
-            <span className="logo-icon">🔥</span>
-          </div>
-          <span className="logo-text">Rebema</span>
-        </div>
-        
-        {/* タブメニュー */}
-        <div className="tabs">
-          <Link href="/mypage" className="tab">
-            <span style={{ fontSize: '20px' }}>👤</span>
-            マイページ
-          </Link>
-          <Link href="/knowledge" className="tab active">
-            <span style={{ fontSize: '20px' }}>📚</span>
-            ナレッジ一覧
-          </Link>
-          <Link href="/ranking" className="tab">
-            <span style={{ fontSize: '20px' }}>📊</span>
-            リーダーボード
-          </Link>
-        </div>
-        
-        {/* プロフィール情報 */}
-        <div className="profile-section">
-          <div className="profile-card">
-            <div className="profile-avatar" />
-            <div className="profile-info">
-              <div className="profile-name-section">
-                <span className="profile-name">{userData.name}</span>
-                <span className="level-badge">Lv.{userData.level}</span>
-              </div>
-              <span className="profile-department">{userData.department}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Sidebar userData={userData} />
+      
+      {/* モバイル用ヘッダー */}
+      <Header />
       
       {/* メインコンテンツ */}
       <div className="main-content">

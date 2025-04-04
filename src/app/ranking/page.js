@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import './ranking.css';
 import Link from 'next/link';
 import Image from 'next/image';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import './ranking.css';
 
 // Mock data for rankings
 const rankingData = [
@@ -56,48 +58,19 @@ export default function Ranking() {
   // Get the remaining users (2nd position and below)
   const otherUsers = rankingData.slice(1);
 
+  const userData = {
+    name: '中村千佳',
+    department: 'デジタルマーケティング部',
+    level: 34
+  };
+    
   return (
-    <div className="ranking-container">
+    <div className="page-container">
       {/* サイドバー */}
-      <div className="sidebar">
-        {/* ロゴ */}
-        <div className="sidebar-logo">
-          <div className="logo-badge">
-            <span style={{ color: 'white', fontSize: '20px' }}>🔥</span>
-          </div>
-          <span className="logo-text">Rebema</span>
-        </div>
-        
-        {/* タブメニュー */}
-        <div className="tabs">
-          <Link href="/mypage" className="tab">
-            <span style={{ fontSize: '20px' }}>👤</span>
-            マイページ
-          </Link>
-          <Link href="/knowledge" className="tab">
-            <span style={{ fontSize: '20px' }}>📚</span>
-            ナレッジ一覧
-          </Link>
-          <Link href="/ranking" className="tab active">
-            <span style={{ fontSize: '20px', color: '#1F47F7' }}>📊</span>
-            リーダーボード
-          </Link>
-        </div>
-        
-        {/* プロフィール情報 */}
-        <div className="profile-section">
-          <div className="profile-card">
-            <div className="profile-avatar" />
-            <div className="profile-info">
-              <div className="profile-name-section">
-                <span className="profile-name">中村千佳</span>
-                <span className="level-badge">Lv.34</span>
-              </div>
-              <span className="profile-department">デジタルマーケティング部</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Sidebar userData={userData} />
+      
+      {/* モバイル用ヘッダー */}
+      <Header />
       
       {/* メインコンテンツ */}
       <div className="main-content">

@@ -1,0 +1,92 @@
+/* このファイルには各ページ特有の特殊なスタイルのみを含めます */
+
+/* 背景色やカード等の基本的なスタイルは common.css を使用します */
+
+/* ログインページ特有のスタイル */
+.bg-login {
+  background-image: linear-gradient(to bottom right, var(--bg-color), var(--white));
+}
+
+/* ランキングページ特有のスタイル */
+.top-ranking-card {
+  background-color: var(--white);
+  border-radius: var(--border-radius-xl);
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.ranking-position {
+  font-size: 64px;
+  font-weight: 900;
+  color: var(--black);
+  text-align: center;
+}
+
+.ranking-item {
+  background-color: var(--white);
+  border-radius: var(--border-radius-xl);
+  padding: 37px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.ranking-item .ranking-position {
+  font-size: 48px;
+}
+
+.user-info-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 40px;
+  gap: var(--space-md);
+  background-color: var(--white);
+  border-radius: var(--border-radius-xl);
+}
+
+.user-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+  padding: 7px 22px;
+  width: 195px;
+}
+
+.user-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #494949;
+  text-align: center;
+}
+
+/* レスポンシブ設定 */
+@media (max-width: 768px) {
+  .user-info-card {
+    flex-direction: column;
+    padding: var(--space-md);
+  }
+  
+  .ranking-item {
+    flex-direction: column;
+    padding: var(--space-md);
+  }
+  
+  .top-ranking-card {
+    flex-direction: column;
+    padding: var(--space-md);
+  }
+}
