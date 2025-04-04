@@ -9,12 +9,15 @@ import { useState, useEffect } from 'react';
  * @param {function} props.onSubmit - フォーム送信時のコールバック
  */
 export default function CreateKnowledgeModal({ onClose, onSubmit }) {
+  const [isClosing, setIsClosing] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     category: 'メール',
-    content: ''
+    target: '既存ユーザー',
+    dashboardUrl: '',
+    content: '',
+    references: ['']
   });
-  const [isClosing, setIsClosing] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,9 +27,22 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
+  // 参考文献の追加
+  const addReference = () => {
+    setFormData(prev => ({
+      ...prev,
+      references: [...prev.references, '']
+    }));
+  };
+
+  // 参考文献の変更
+  const handleReferenceChange = (index, value) => {
+    const newReferences = [...formData.references];
+    newReferences[index] = value;
+    setFormData(prev => ({
+      ...prev,
+      references: newReferences
+    }));
   };
 
   // 閉じるアニメーションを制御する関数
@@ -36,6 +52,16 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
     setTimeout(() => {
       onClose();
     }, 300); // CSSのアニメーション時間と合わせる
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 空の参考文献を除外
+    const cleanedData = {
+      ...formData,
+      references: formData.references.filter(ref => ref.trim() !== '')
+    };
+    onSubmit(cleanedData);
   };
 
   // ESCキーでモーダルを閉じる
@@ -53,29 +79,50 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
 
   return (
     <div className={`modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
-      <div className={`modal-content ${isClosing ? 'closing' : ''}`} onClick={e => e.stopPropagation()}>
-        <div className="create-knowledge-form">
-          <div className="modal-header">
-            <h2>新規ナレッジ作成</h2>
-            <button className="close-button" onClick={handleClose}>×</button>
+      <div 
+        className={`modal-content ${isClosing ? 'closing' : ''}`} 
+        onClick={e => e.stopPropagation()}
+      >
+        {/* 閉じるボタン（右上に固定） */}
+        <button className="close-button" onClick={handleClose}>×</button>
+        
+        <div className="knowledge-detail">
+          {/* ヘッダー部分 */}
+          <div className="modal-header-container">
+            <div className="modal-header">
+              <div 
+                className="modal-icon" 
+                style={{ backgroundColor: '#FFFBD6' }}
+              >
+                <span>💡</span>
+              </div>
+              <h2 className="modal-title">新規ナレッジ作成</h2>
+            </div>
           </div>
+          
+          {/* フォーム */}
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="title">タイトル</label>
+            {/* タイトル */}
+            <div className="knowledge-detail-section">
+              <div className="knowledge-detail-label">タイトル</div>
               <input 
                 type="text" 
-                id="title"
+                className="knowledge-detail-content"
+                style={{ minHeight: 'auto' }}
                 name="title"
-                placeholder="ナレッジのタイトルを入力" 
                 value={formData.title}
                 onChange={handleChange}
                 required
+                placeholder="ナレッジのタイトルを入力"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="category">カテゴリー</label>
+            
+            {/* 配信手法 */}
+            <div className="knowledge-detail-section">
+              <div className="knowledge-detail-label">配信手法</div>
               <select 
-                id="category"
+                className="knowledge-detail-content"
+                style={{ minHeight: 'auto' }}
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
@@ -86,19 +133,80 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
                 <option value="その他">その他</option>
               </select>
             </div>
-            <div className="form-group">
-              <label htmlFor="content">内容</label>
+            
+            {/* ターゲット */}
+            <div className="knowledge-detail-section">
+              <div className="knowledge-detail-label">ターゲット</div>
+              <select 
+                className="knowledge-detail-content"
+                style={{ minHeight: 'auto' }}
+                name="target"
+                value={formData.target}
+                onChange={handleChange}
+              >
+                <option value="既存ユーザー">既存ユーザー</option>
+                <option value="新規ユーザー">新規ユーザー</option>
+                <option value="休眠ユーザー">休眠ユーザー</option>
+                <option value="全ユーザー">全ユーザー</option>
+              </select>
+            </div>
+            
+            {/* 施策ダッシュボードURL */}
+            <div className="knowledge-detail-section">
+              <div className="knowledge-detail-label">施策ダッシュボードURL（任意）</div>
+              <input 
+                type="text" 
+                className="knowledge-detail-content"
+                style={{ minHeight: 'auto' }}
+                name="dashboardUrl"
+                value={formData.dashboardUrl}
+                onChange={handleChange}
+                placeholder="https://example.com/dashboard"
+              />
+            </div>
+            
+            {/* コンテンツ本文 */}
+            <div className="knowledge-detail-section">
+              <div className="knowledge-detail-label">内容</div>
               <textarea 
-                id="content"
+                className="knowledge-detail-content"
                 name="content"
-                rows="5" 
-                placeholder="ナレッジの内容を入力"
                 value={formData.content}
                 onChange={handleChange}
                 required
-              ></textarea>
+                placeholder="ナレッジの内容を記入してください。目的、仮説、期待効果などを含めると良いでしょう。"
+                rows="8"
+              />
             </div>
-            <div className="form-buttons">
+            
+            {/* 参考文献 */}
+            <div className="knowledge-detail-section">
+              <div className="knowledge-detail-label">参考文献（任意）</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {formData.references.map((reference, index) => (
+                  <input 
+                    key={index}
+                    type="text" 
+                    className="knowledge-detail-content"
+                    style={{ minHeight: 'auto' }}
+                    value={reference}
+                    onChange={(e) => handleReferenceChange(index, e.target.value)}
+                    placeholder="参考にした書籍、記事、ウェブサイトなど"
+                  />
+                ))}
+                <button 
+                  type="button" 
+                  className="submit-button" 
+                  style={{ width: 'auto', alignSelf: 'flex-start' }}
+                  onClick={addReference}
+                >
+                  + 参考文献を追加
+                </button>
+              </div>
+            </div>
+            
+            {/* フッターアクション */}
+            <div className="modal-footer">
               <button type="button" className="cancel-button" onClick={handleClose}>キャンセル</button>
               <button type="submit" className="submit-button">作成</button>
             </div>

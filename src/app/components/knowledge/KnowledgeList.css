@@ -1,5 +1,213 @@
 /* Knowledge list styles */
-/* ...省略（前半部分は同じ）... */
+
+/* Knowledge list container */
+.knowledge-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 24px 32px;
+  background-color: #FDFDFD;
+  border-radius: 16px;
+}
+
+/* Knowledge header */
+.knowledge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+}
+
+.knowledge-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(51, 51, 51, 0.8);
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  background-color: #1F47F7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.create-button:hover {
+  background-color: #0035E0;
+}
+
+/* Knowledge items */
+.knowledge-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.knowledge-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: #fff;
+  border: 1px solid rgba(19, 19, 19, 0.08);
+  border-radius: 8px;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.3s;
+}
+
+.knowledge-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.knowledge-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.knowledge-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.knowledge-title-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(19, 19, 19, 0.8);
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.knowledge-category {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.category-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+.category-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background-color: #DDF4FF;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.category-icon {
+  font-size: 14px;
+}
+
+.knowledge-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.knowledge-author {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.author-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #9B9B9B;
+}
+
+.author-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.knowledge-views {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.views-icon {
+  font-size: 14px;
+  color: #333;
+}
+
+.views-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* No knowledge message */
+.no-knowledge-message {
+  padding: 24px;
+  text-align: center;
+  color: #666;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Search styles */
+.search-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  background-color: #F5F6FB;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 7px 18px;
+  width: 100%;
+}
+
+.search-icon {
+  color: #333;
+  font-size: 20px;
+}
+
+.search-input {
+  border: none;
+  background-color: transparent;
+  flex: 1;
+  font-size: 20px;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #333;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #333;
+}
 
 /* Modal styles - 右からスライドイン表示に変更 */
 .modal-overlay {
@@ -41,13 +249,13 @@
 
 .modal-content {
   background-color: white;
-  width: 50%; /* 画面の半分の幅 */
-  max-width: 800px;
+  width: 720px; /* Figmaデザインに合わせて固定幅に */
+  max-width: 50%; /* レスポンシブ対応 */
   height: 100%; /* 画面の高さいっぱい */
   max-height: 100vh; /* 最大高さを画面の高さに設定 */
-  padding: 32px;
+  padding: 0; /* パディングを削除 */
   overflow-y: auto;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  box-shadow: -3px 0 4px rgba(0, 0, 0, 0.08); /* Figmaのシャドウ */
   animation: slideIn 0.3s ease-out;
   position: relative;
   display: flex;
@@ -81,13 +289,24 @@
   display: flex;
   flex-direction: column;
   height: 100%; /* 詳細内容も高さ100%に */
+  padding: 0 40px; /* パディングを調整 */
+  gap: 29px; /* Figmaデザインのgap */
+}
+
+/* モーダルヘッダー部分 - Figmaデザインに合わせて更新 */
+.modal-header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  padding-top: 40px; /* 上部にパディングを追加 */
 }
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 24px;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 0;
 }
 
 .modal-title-container {
@@ -107,14 +326,19 @@
 }
 
 .modal-title {
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 700;
-  color: rgba(19, 19, 19, 0.8);
+  color: #333333;
   margin: 0;
   font-family: 'Noto Sans JP', sans-serif;
+  letter-spacing: -0.19%;
+  line-height: 1.2em;
 }
 
 .close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   background: none;
   border: none;
   font-size: 24px;
@@ -128,160 +352,272 @@
   width: 32px;
   border-radius: 50%;
   transition: background-color 0.2s;
+  z-index: 10; /* 他の要素より前面に表示 */
 }
 
 .close-button:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.knowledge-detail-meta {
+/* メタデータセクション - Figmaデザインに合わせて更新 */
+.knowledge-meta-grid {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
-.detail-category {
+.knowledge-meta-row {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
+  width: 100%;
 }
 
-.detail-author {
+.meta-label {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  letter-spacing: -0.19%;
+}
+
+.meta-value {
   display: flex;
   align-items: center;
+  padding: 4px 8px;
   gap: 8px;
+  border-radius: 4px;
+}
+
+.meta-value-text {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.meta-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #DDF4FF;
+}
+
+.meta-tag-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.meta-author-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 4px 8px;
+  gap: 8px;
+  background: #F8F8F8;
+  border-radius: 4px;
+}
+
+.meta-author-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+}
+
+.meta-author-name {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.meta-divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.08);
+  margin: 8px 0;
+}
+
+/* テキストフィールド - Figmaデザインに合わせて更新 */
+.knowledge-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.knowledge-detail-label {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #333333;
+  letter-spacing: 4%;
+  line-height: 1.5em;
 }
 
 .knowledge-detail-content {
-  margin-bottom: 24px;
-  color: rgba(0, 0, 0, 0.8);
-  line-height: 1.6;
-  flex: 1; /* コンテンツ部分を拡大して余白を埋める */
-  overflow-y: auto; /* 内容が多い場合はスクロール */
-}
-
-.content-h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 24px 0 16px;
-  color: rgba(19, 19, 19, 0.9);
+  padding: 12px 16px;
+  border: 1px solid rgba(51, 51, 51, 0.08);
+  border-radius: 8px;
   font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.7em;
+  letter-spacing: 4%;
+  color: #333333;
+  background-color: #FFFFFF;
+  flex: 1;
+  overflow-y: auto;
+  white-space: pre-wrap;
 }
 
-.content-h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 20px 0 12px;
-  color: rgba(19, 19, 19, 0.8);
+.url-content {
   font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.7em;
+  letter-spacing: 4%;
+  color: #3D7FBD;
 }
 
-.content-paragraph {
-  margin: 8px 0;
-  font-size: 16px;
-}
-
-.content-list-item {
-  margin: 4px 0 4px 24px;
-  font-size: 16px;
-  list-style-type: disc;
-}
-
-.content-list-item.numbered {
-  list-style-type: decimal;
-}
-
-.knowledge-detail-stats {
+/* コメントセクション - Figmaデザインに合わせて更新 */
+.comment-section {
   display: flex;
-  justify-content: flex-start;
-  gap: 24px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  color: rgba(0, 0, 0, 0.7);
-  margin-top: auto; /* 常に下部に配置 */
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
-.stats-item {
+.comment-divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.08);
+  margin: 8px 0;
+}
+
+.comment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.comment-timestamp {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000000;
+  opacity: 0.5;
+}
+
+.comment-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.comment-user {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.stats-icon {
-  font-size: 16px;
-}
-
-/* Create knowledge form */
-.create-knowledge-form {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* フォームも高さ100%に */
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  flex: 1; /* フォームを拡大して余白を埋める */
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
+  padding: 2px 0;
   gap: 8px;
 }
 
-.form-group label {
-  font-size: 14px;
-  font-weight: 700;
-  color: #333;
+.comment-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.form-group input, 
-.form-group select {
-  padding: 12px;
-  border: 1px solid rgba(51, 51, 51, 0.2);
+.comment-username {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #333333;
+}
+
+.comment-bubble {
+  background-color: #E4E4E4;
+  padding: 5px 20px;
+  border-radius: 15px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #333333;
+  flex: 1;
+}
+
+.comment-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.comment-input-label {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #333333;
+  letter-spacing: 4%;
+}
+
+.comment-input-field {
+  padding: 12px 16px;
+  background-color: rgba(51, 51, 51, 0.1);
+  border: 1px solid rgba(51, 51, 51, 0.08);
   border-radius: 8px;
+  resize: none;
+  font-family: 'Noto Sans JP', sans-serif;
   font-size: 14px;
+  min-height: 60px;
 }
 
-.form-group textarea {
-  padding: 12px;
-  border: 1px solid rgba(51, 51, 51, 0.2);
-  border-radius: 8px;
-  font-size: 14px;
-  flex: 1; /* テキストエリアを拡大して余白を埋める */
-  min-height: 150px; /* 最小の高さを設定 */
-  resize: none; /* リサイズ無効化 */
-}
-
-.form-buttons {
+/* フッターアクション - Figmaデザインに合わせて更新 */
+.modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
-  margin-top: 24px;
+  align-items: center;
+  gap: 45px;
+  padding: 10px 0 40px; /* 下部にもパディングを追加 */
+  margin-top: auto;
 }
 
 .cancel-button {
-  padding: 10px 16px;
-  background: none;
-  border: 1px solid rgba(51, 51, 51, 0.2);
-  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 700;
+  font-size: 14px;
+  color: #1F47F7;
+  background: none;
+  border: none;
   cursor: pointer;
+  padding: 8px 16px;
 }
 
 .submit-button {
-  padding: 10px 16px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFFFFF;
   background-color: #1F47F7;
-  color: white;
   border: none;
   border-radius: 8px;
-  font-weight: 700;
+  padding: 8px 16px;
   cursor: pointer;
+  width: 100px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .submit-button:hover {
@@ -291,7 +627,7 @@ form {
 /* Responsive design for modal */
 @media (max-width: 1024px) {
   .modal-content {
-    width: 70%;
+    max-width: 70%;
   }
 }
 
@@ -301,28 +637,26 @@ form {
   }
   
   .modal-content {
-    width: 100%;
-    padding: 16px;
+    max-width: 100%;
+    padding: 0 20px;
   }
   
-  .modal-title-container {
+  .knowledge-detail {
+    padding: 0 20px;
+  }
+  
+  .modal-title {
+    font-size: 20px;
+  }
+  
+  .knowledge-meta-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
   
-  .knowledge-detail-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  
-  .content-h1 {
-    font-size: 22px;
-  }
-  
-  .content-h2 {
-    font-size: 18px;
+  .meta-tag {
+    align-self: flex-start;
   }
   
   .knowledge-header {
@@ -348,5 +682,35 @@ form {
   
   .knowledge-views {
     justify-content: flex-end;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-content {
+    padding: 0 16px;
+  }
+  
+  .knowledge-detail {
+    padding: 0 16px;
+    gap: 16px;
+  }
+  
+  .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .comment-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .modal-footer {
+    flex-direction: column-reverse;
+    gap: 16px;
+  }
+  
+  .submit-button {
+    width: 100%;
   }
 }
