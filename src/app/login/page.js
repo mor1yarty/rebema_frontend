@@ -16,27 +16,58 @@ export default function Login() {
   const [loginError, setLoginError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setLoginError('');
     
-    // ダミー認証処理 - 実際のAPIができるまでの仮実装
-    console.log('ログイン処理:', { email, password });
-    
-    // ダミー認証の例 - 何か入力されていればログイン成功とする
-    if (email && password) {
-      // 成功時の処理 - マイページへリダイレクト
-      setTimeout(() => {
-        setIsLoading(false);
-        router.push('/mypage');
-      }, 1000); // 1秒の遅延を追加してローディング表示のデモ
-    } else {
-      // 失敗時の処理
-      setTimeout(() => {
-        setIsLoading(false);
-        setLoginError('メールアドレスとパスワードを入力してください');
-      }, 1000);
+    try {
+      // フォームデータをURLエンコードされた形式に変換
+      const formData = new URLSearchParams();
+      formData.append('email', email);
+      formData.append('password', password);
+
+      // auth/loginエンドポイントにリクエストを送信
+      const loginResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString(),
+      });
+
+      if (!loginResponse.ok) {
+        throw new Error('ログインに失敗しました');
+      }
+
+      const { jwt_token: token } = await loginResponse.json();
+
+      // auth/meエンドポイントでユーザー情報を取得
+      const userResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/auth/me`, {
+        headers: {
+          'accept': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!userResponse.ok) {
+        throw new Error('ユーザー情報の取得に失敗しました');
+      }
+
+      const userData = await userResponse.json();
+      
+      // トークンとユーザー情報をローカルストレージに保存
+      localStorage.setItem('token', token);
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      // マイページへ遷移
+      router.push('/mypage');
+    } catch (error) {
+      console.error('Login error:', error);
+      setLoginError('ログインに失敗しました。メールアドレスとパスワードを確認してください。');
+    } finally {
+      setIsLoading(false);
     }
   };
 
