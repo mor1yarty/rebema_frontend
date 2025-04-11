@@ -69,16 +69,6 @@ export default function KnowledgeModal({ content, onClose }) {
     };
   }, []);
 
-  // ダミーのコメントデータ
-  const comments = [
-    {
-      id: 1,
-      username: 'Sato kaori',
-      timestamp: '2025/03/28/16:00:00',
-      text: 'この件について教えてください！'
-    }
-  ];
-
   return (
     <div className={`modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
       <div 
@@ -147,16 +137,7 @@ export default function KnowledgeModal({ content, onClose }) {
           <div className="knowledge-detail-section">
             <div className="knowledge-detail-label">内容</div>
             <div className="knowledge-detail-content">
-              {content.content ? content.content : `目的
-メールを活用してターゲットユーザーとのエンゲージメントを高め、コンバージョン率やブランドロイヤルティを向上させる。
-仮説
-パーソナライズされたコンテンツを送ることで開封率・クリック率が向上する。
-セグメント別に最適化された配信タイミングを設定することで反応率が高まる。
-定期的な情報提供と限定オファーにより購買意欲を刺激できる。
-期待効果
-メールの開封率・クリック率の向上
-リードナーチャリングによる長期的な顧客育成
-顧客ロイヤルティの強化によるLTV（顧客生涯価値）の向上`}
+              {content.content}
             </div>
           </div>
           
@@ -165,15 +146,15 @@ export default function KnowledgeModal({ content, onClose }) {
           
           {/* コメントセクション */}
           <div className="comment-section">
-            {comments.map(comment => (
-              <div key={comment.id} className="comment-item">
-                <div className="comment-timestamp">{comment.timestamp}</div>
+            {content.comments.map((comment, index) => (
+              <div key={`comment-${index}`} className="comment-item">
+                <div className="comment-timestamp">{comment.createdAt}</div>
                 <div className="comment-content">
                   <div className="comment-user">
                     <div className="comment-avatar"></div>
-                    <div className="comment-username">{comment.username}</div>
+                    <div className="comment-username">{comment.author}</div>
                   </div>
-                  <div className="comment-bubble">{comment.text}</div>
+                  <div className="comment-bubble">{comment.content}</div>
                 </div>
               </div>
             ))}
