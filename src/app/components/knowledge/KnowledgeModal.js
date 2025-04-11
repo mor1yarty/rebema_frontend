@@ -117,14 +117,6 @@ export default function KnowledgeModal({ content, onClose }) {
           {/* 区切り線 */}
           <div className="meta-divider"></div>
           
-          {/* 施策ダッシュボードURL */}
-          <div className="knowledge-detail-section">
-            <div className="knowledge-detail-label">施策ダッシュボードURL</div>
-            <div className="knowledge-detail-content" style={{ minHeight: 'auto' }}>
-              <span className="url-content">https://xxxxxxxxx/xxxxxxxxxxx/xxxxxxxxx?xxxxxx=xxxxxxxx</span>
-            </div>
-          </div>
-          
           {/* コンテンツ本文 */}
           <div className="knowledge-detail-section">
             <div className="knowledge-detail-label">内容</div>

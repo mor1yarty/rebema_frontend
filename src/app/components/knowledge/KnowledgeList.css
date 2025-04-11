@@ -282,9 +282,9 @@
 .knowledge-detail {
   display: flex;
   flex-direction: column;
-  height: 100%; /* 詳細内容も高さ100%に */
-  padding: 0 40px; /* パディングを調整 */
-  gap: 29px; /* Figmaデザインのgap */
+  height: 100%;
+  padding: 0 40px;
+  gap: 29px;
 }
 
 /* モーダルヘッダー部分 - Figmaデザインに合わせて更新 */
@@ -461,15 +461,6 @@
   flex: 1;
   overflow-y: auto;
   white-space: pre-wrap;
-}
-
-.url-content {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.7em;
-  letter-spacing: 4%;
-  color: #3D7FBD;
 }
 
 /* コメントセクション - Figmaデザインに合わせて更新 */

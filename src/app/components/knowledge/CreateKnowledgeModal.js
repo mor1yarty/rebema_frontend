@@ -14,7 +14,6 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
     title: '',
     category: 'メール',
     target: '既存ユーザー',
-    dashboardUrl: '',
     content: ''
   });
 
@@ -119,20 +118,6 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
                 <option value="休眠ユーザー">休眠ユーザー</option>
                 <option value="全ユーザー">全ユーザー</option>
               </select>
-            </div>
-            
-            {/* 施策ダッシュボードURL */}
-            <div className="knowledge-detail-section">
-              <div className="knowledge-detail-label">施策ダッシュボードURL（任意）</div>
-              <input 
-                type="text" 
-                className="knowledge-detail-content"
-                style={{ minHeight: 'auto' }}
-                name="dashboardUrl"
-                value={formData.dashboardUrl}
-                onChange={handleChange}
-                placeholder="https://example.com/dashboard"
-              />
             </div>
             
             {/* コンテンツ本文 */}
