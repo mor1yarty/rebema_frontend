@@ -66,12 +66,6 @@ export default function KnowledgeModal({ content, onClose }) {
           {/* ヘッダー部分 */}
           <div className="modal-header-container">
             <div className="modal-header">
-              <div 
-                className="modal-icon" 
-                style={{ backgroundColor: content.iconBgColor }}
-              >
-                <span>{content.icon}</span>
-              </div>
               <h2 className="modal-title">{content.title}</h2>
             </div>
             
@@ -84,9 +78,6 @@ export default function KnowledgeModal({ content, onClose }) {
                   <div className="meta-author-avatar"></div>
                   <span className="meta-author-name">{content.author}</span>
                 </div>
-                <button className="submit-button" style={{ marginLeft: 'auto', height: '28px' }}>
-                  <span style={{ marginRight: '4px' }}>+</span>追加
-                </button>
               </div>
               
               {/* 作成日時行 */}
@@ -101,7 +92,6 @@ export default function KnowledgeModal({ content, onClose }) {
               <div className="knowledge-meta-row">
                 <span className="meta-label">配信手法</span>
                 <div className="meta-tag">
-                  <span>✉️</span>
                   <span className="meta-tag-text">{content.category}</span>
                 </div>
               </div>
@@ -111,17 +101,6 @@ export default function KnowledgeModal({ content, onClose }) {
                 <span className="meta-label">ターゲット</span>
                 <div className="meta-tag" style={{ backgroundColor: '#DDF4FF' }}>
                   <span className="meta-tag-text">既存ユーザー</span>
-                </div>
-              </div>
-              
-              {/* 参考文献行 */}
-              <div className="knowledge-meta-row">
-                <span className="meta-label">参考文献</span>
-                <div className="meta-tag" style={{ backgroundColor: '#DDDDDD' }}>
-                  <span className="meta-tag-text">ドリルを売るには穴を売れ</span>
-                </div>
-                <div className="meta-tag" style={{ backgroundColor: '#DDDDDD' }}>
-                  <span className="meta-tag-text">伝え方が９割</span>
                 </div>
               </div>
               

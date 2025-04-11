@@ -68,16 +68,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.knowledge-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  font-size: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .knowledge-content {
   flex: 1;
   display: flex;
@@ -114,10 +104,6 @@
   padding: 4px 8px;
   font-size: 13px;
   color: rgba(0, 0, 0, 0.5);
-}
-
-.category-icon {
-  font-size: 14px;
 }
 
 .knowledge-meta {
@@ -321,16 +307,6 @@
   display: flex;
   align-items: center;
   gap: 16px;
-}
-
-.modal-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  font-size: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .modal-title {
