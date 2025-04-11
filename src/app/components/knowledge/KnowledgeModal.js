@@ -12,6 +12,32 @@ export default function KnowledgeModal({ content, onClose }) {
   const [isClosing, setIsClosing] = useState(false);
   const [comment, setComment] = useState('');
 
+  // 配信手法に応じた背景色を返す関数
+  const getMethodColor = (method) => {
+    switch (method) {
+      case 'メール':
+        return '#DDF4FF';  // 青系
+      case 'SNS':
+        return '#D6FFE4';  // 緑系
+      case 'My東京ガス':
+        return '#FFE4D6';  // オレンジ系
+      default:
+        return '#F0F0F0';  // グレー系
+    }
+  };
+
+  // ターゲットに応じた背景色を返す関数（配信手法の色を薄くする）
+  const getTargetColor = (method) => {
+    switch (method) {
+      case '新規顧客':
+        return '#EEF9FF';  // 薄い青系
+      case '既存顧客':
+        return '#EBFFF2';  // 薄い緑系
+      default:
+        return '#F0F0F0';  // 薄いグレー系
+    }
+  };
+
   // 閉じるアニメーションを制御する関数
   const handleClose = () => {
     setIsClosing(true);
@@ -42,16 +68,6 @@ export default function KnowledgeModal({ content, onClose }) {
       window.removeEventListener('keydown', handleEsc);
     };
   }, []);
-
-  // ダミーのコメントデータ
-  const comments = [
-    {
-      id: 1,
-      username: 'Sato kaori',
-      timestamp: '2025/03/28/16:00:00',
-      text: 'この件について教えてください！'
-    }
-  ];
 
   return (
     <div className={`modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
@@ -91,7 +107,7 @@ export default function KnowledgeModal({ content, onClose }) {
               {/* 配信手法行 */}
               <div className="knowledge-meta-row">
                 <span className="meta-label">配信手法</span>
-                <div className="meta-tag">
+                <div className="meta-tag" style={{ backgroundColor: getMethodColor(content.category) }}>
                   <span className="meta-tag-text">{content.category}</span>
                 </div>
               </div>
@@ -99,8 +115,8 @@ export default function KnowledgeModal({ content, onClose }) {
               {/* ターゲット行 */}
               <div className="knowledge-meta-row">
                 <span className="meta-label">ターゲット</span>
-                <div className="meta-tag" style={{ backgroundColor: '#DDF4FF' }}>
-                  <span className="meta-tag-text">既存ユーザー</span>
+                <div className="meta-tag" style={{ backgroundColor: getTargetColor(content.category) }}>
+                  <span className="meta-tag-text">{content.target}</span>
                 </div>
               </div>
               
@@ -121,16 +137,7 @@ export default function KnowledgeModal({ content, onClose }) {
           <div className="knowledge-detail-section">
             <div className="knowledge-detail-label">内容</div>
             <div className="knowledge-detail-content">
-              {content.content ? content.content : `目的
-メールを活用してターゲットユーザーとのエンゲージメントを高め、コンバージョン率やブランドロイヤルティを向上させる。
-仮説
-パーソナライズされたコンテンツを送ることで開封率・クリック率が向上する。
-セグメント別に最適化された配信タイミングを設定することで反応率が高まる。
-定期的な情報提供と限定オファーにより購買意欲を刺激できる。
-期待効果
-メールの開封率・クリック率の向上
-リードナーチャリングによる長期的な顧客育成
-顧客ロイヤルティの強化によるLTV（顧客生涯価値）の向上`}
+              {content.content}
             </div>
           </div>
           
@@ -139,15 +146,15 @@ export default function KnowledgeModal({ content, onClose }) {
           
           {/* コメントセクション */}
           <div className="comment-section">
-            {comments.map(comment => (
-              <div key={comment.id} className="comment-item">
-                <div className="comment-timestamp">{comment.timestamp}</div>
+            {content.comments.map((comment, index) => (
+              <div key={`comment-${index}`} className="comment-item">
+                <div className="comment-timestamp">{comment.createdAt}</div>
                 <div className="comment-content">
                   <div className="comment-user">
                     <div className="comment-avatar"></div>
-                    <div className="comment-username">{comment.username}</div>
+                    <div className="comment-username">{comment.author}</div>
                   </div>
-                  <div className="comment-bubble">{comment.text}</div>
+                  <div className="comment-bubble">{comment.content}</div>
                 </div>
               </div>
             ))}

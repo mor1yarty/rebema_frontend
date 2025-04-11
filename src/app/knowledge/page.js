@@ -12,6 +12,7 @@ const knowledgeData = [
     id: 1, 
     title: '電気・ガスのセット契約の促進', 
     category: 'メール',
+    target: '既存ユーザー',
     icon: '💡',
     iconBgColor: '#FFFBD6',
     author: '佐伯 えり',
@@ -48,6 +49,7 @@ const knowledgeData = [
     id: 2, 
     title: 'サブスク型の家電レンタル訴求', 
     category: 'メール',
+    target: '新規ユーザー',
     icon: '🏡️',
     iconBgColor: '#F1FFCA',
     author: '佐伯 えり',
@@ -84,6 +86,7 @@ const knowledgeData = [
     id: 3, 
     title: '点検・保守サービスのリマインド', 
     category: 'メール',
+    target: '既存ユーザー',
     icon: '👷',
     iconBgColor: '#E0D6FF',
     author: '佐伯 えり',
@@ -133,7 +136,8 @@ export default function KnowledgePage() {
   const filteredKnowledge = searchQuery
     ? knowledgeData.filter(item => 
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchQuery.toLowerCase())
+        item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.target.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : knowledgeData;
   
