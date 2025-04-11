@@ -9,16 +9,11 @@
 export default function KnowledgeItem({ item, onClick }) {
   return (
     <div className="knowledge-item" onClick={onClick}>
-      <div className="knowledge-icon" style={{ backgroundColor: item.iconBgColor }}>
-        <span>{item.icon}</span>
-      </div>
-      
       <div className="knowledge-content">
         <div className="knowledge-title-text">{item.title}</div>
         <div className="knowledge-category">
           <span className="category-label">配信手法</span>
           <div className="category-badge">
-            <span className="category-icon">✉️</span>
             <span>{item.category}</span>
           </div>
         </div>

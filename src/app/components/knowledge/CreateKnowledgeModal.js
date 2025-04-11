@@ -15,8 +15,7 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
     category: 'メール',
     target: '既存ユーザー',
     dashboardUrl: '',
-    content: '',
-    references: ['']
+    content: ''
   });
 
   const handleChange = (e) => {
@@ -24,24 +23,6 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
     setFormData(prev => ({
       ...prev,
       [name]: value
-    }));
-  };
-
-  // 参考文献の追加
-  const addReference = () => {
-    setFormData(prev => ({
-      ...prev,
-      references: [...prev.references, '']
-    }));
-  };
-
-  // 参考文献の変更
-  const handleReferenceChange = (index, value) => {
-    const newReferences = [...formData.references];
-    newReferences[index] = value;
-    setFormData(prev => ({
-      ...prev,
-      references: newReferences
     }));
   };
 
@@ -56,12 +37,7 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 空の参考文献を除外
-    const cleanedData = {
-      ...formData,
-      references: formData.references.filter(ref => ref.trim() !== '')
-    };
-    onSubmit(cleanedData);
+    onSubmit(formData);
   };
 
   // ESCキーでモーダルを閉じる
@@ -90,12 +66,6 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
           {/* ヘッダー部分 */}
           <div className="modal-header-container">
             <div className="modal-header">
-              <div 
-                className="modal-icon" 
-                style={{ backgroundColor: '#FFFBD6' }}
-              >
-                <span>💡</span>
-              </div>
               <h2 className="modal-title">新規ナレッジ作成</h2>
             </div>
           </div>
@@ -177,32 +147,6 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
                 placeholder="ナレッジの内容を記入してください。目的、仮説、期待効果などを含めると良いでしょう。"
                 rows="8"
               />
-            </div>
-            
-            {/* 参考文献 */}
-            <div className="knowledge-detail-section">
-              <div className="knowledge-detail-label">参考文献（任意）</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {formData.references.map((reference, index) => (
-                  <input 
-                    key={index}
-                    type="text" 
-                    className="knowledge-detail-content"
-                    style={{ minHeight: 'auto' }}
-                    value={reference}
-                    onChange={(e) => handleReferenceChange(index, e.target.value)}
-                    placeholder="参考にした書籍、記事、ウェブサイトなど"
-                  />
-                ))}
-                <button 
-                  type="button" 
-                  className="submit-button" 
-                  style={{ width: 'auto', alignSelf: 'flex-start' }}
-                  onClick={addReference}
-                >
-                  + 参考文献を追加
-                </button>
-              </div>
             </div>
             
             {/* フッターアクション */}
