@@ -109,7 +109,36 @@
 .knowledge-meta {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
+  align-items: flex-end;  /* 右端揃え */
+  min-width: 120px;  /* メタ情報の最小幅を確保 */
+}
+
+.knowledge-date,
+.knowledge-author,
+.knowledge-views {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.date-value,
+.author-name,
+.views-count {
+  font-size: 12px;
+  color: #666666;
+}
+
+.author-avatar {
+  width: 16px;  /* アバターサイズを小さく */
+  height: 16px;
+  border-radius: 50%;
+  background-color: #9B9B9B;
+}
+
+.views-icon {
+  font-size: 12px;  /* アイコンサイズを調整 */
+  color: #666666;
 }
 
 .knowledge-author {
@@ -688,4 +717,20 @@
   .submit-button {
     width: 100%;
   }
+}
+
+.knowledge-date {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.date-label {
+  font-size: 14px;
+  color: #666666;
+}
+
+.date-value {
+  font-size: 12px;
+  color: #666666;
 }

@@ -43,13 +43,30 @@ export default function MyPage() {
           avatar: data.avatar || '/avatar1.jpg'
         });
 
+        // メソッドとターゲットの数値を文字列に変換する関数
+        const getMethodString = (methodId) => {
+          switch (methodId) {
+            case 1: return 'メール';
+            case 2: return 'SNS';
+            case 3: return 'My東京ガス';
+            default: return '未分類';
+          }
+        };
+
+        const getTargetString = (targetId) => {
+          switch (targetId) {
+            case 1: return '新規顧客';
+            case 2: return '既存顧客';
+            default: return 'その他';
+          }
+        };
+
         // 知識データを活動履歴から変換
         const formattedKnowledge = data.activity?.map(item => ({
           id: item.id,
           title: item.title,
-          category: item.method === '1' ? 'メール' : '未分類',
-          icon: '💡',
-          iconBgColor: '#FFFBD6',
+          category: getMethodString(Number(item.method)),
+          target: getTargetString(Number(item.target)),
           author: item.author,
           views: item.views,
           createdAt: item.createdAt,
