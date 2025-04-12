@@ -23,6 +23,19 @@ export default function MyPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [toast, setToast] = useState(null);
 
+  useEffect(() => {
+    // URLにハッシュが含まれている場合は、ナレッジページにリダイレクト
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#')) {
+        router.push(`/knowledge${hash}`);
+        return;
+      }
+    }
+    
+    loadUserData();
+  }, [router]);
+
   const loadUserData = async () => {
     try {
       // ローカルストレージからトークンを取得
@@ -103,10 +116,6 @@ export default function MyPage() {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    loadUserData();
-  }, [router]);
 
   // モーダルが閉じられた後にデータを更新する処理
   const handleModalClose = (updatedContent) => {

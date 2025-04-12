@@ -29,15 +29,19 @@ export default function KnowledgeList({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   
-  // URLからナレッジIDを取得
+  // URLからナレッジIDを取得してモーダルを表示する
   useEffect(() => {
     // URLに含まれるハッシュ部分を取得
     const hash = window.location.hash;
     if (hash && hash.startsWith('#')) {
-      const knowledgeId = hash.substring(1); // '#'を除去してIDを取得
+      const knowledgeIdFromHash = hash.substring(1); // '#'を除去してIDを取得
       
-      // IDに該当するナレッジを探す
-      const knowledge = knowledgeData.find(item => item.id === knowledgeId);
+      // 該当するナレッジを探す - 型変換を考慮する
+      const knowledge = knowledgeData.find(item => {
+        // 両方を文字列に変換して比較
+        return String(item.id) === String(knowledgeIdFromHash);
+      });
+      
       if (knowledge) {
         // 見つかった場合はモーダルを開く
         setModalContent(knowledge);

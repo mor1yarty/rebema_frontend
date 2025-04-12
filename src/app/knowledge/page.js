@@ -27,9 +27,16 @@ export default function KnowledgePage() {
         // ローカルストレージからトークンを取得
         const token = localStorage.getItem('token');
         
-        // トークンがない場合はログインページにリダイレクト
+        // トークンがない場合はログインページにリダイレクト（URLハッシュを保持）
         if (!token) {
-          router.push('/login');
+          // 現在のURLハッシュを取得
+          const hash = window.location.hash;
+          // hashがある場合はそれを付けてリダイレクト、ない場合は通常のリダイレクト
+          if (hash) {
+            router.push(`/login${hash}`);
+          } else {
+            router.push('/login');
+          }
           return;
         }
         
@@ -52,7 +59,14 @@ export default function KnowledgePage() {
           if (response.status === 401) {
             localStorage.removeItem('token');
             localStorage.removeItem('userData');
-            router.push('/login');
+            // 現在のURLハッシュを取得
+            const hash = window.location.hash;
+            // hashがある場合はそれを付けてリダイレクト
+            if (hash) {
+              router.push(`/login${hash}`);
+            } else {
+              router.push('/login');
+            }
             return;
           }
           throw new Error(`APIリクエストが失敗しました: ${response.status}`);
