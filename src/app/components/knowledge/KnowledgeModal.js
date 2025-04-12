@@ -30,7 +30,7 @@ export default function KnowledgeModal({ content, onClose }) {
         }
 
         // ナレッジ詳細を取得
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}`, {
           headers: {
             'accept': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -38,6 +38,18 @@ export default function KnowledgeModal({ content, onClose }) {
         });
 
         if (!response.ok) {
+          // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
+          if (response.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            setIsClosing(true);
+            setTimeout(() => {
+              onClose();
+              // ログインページにリダイレクト
+              window.location.href = '/login';
+            }, 300);
+            return;
+          }
           throw new Error(`ナレッジ詳細の取得に失敗しました: ${response.status}`);
         }
 
@@ -45,7 +57,7 @@ export default function KnowledgeModal({ content, onClose }) {
         setKnowledgeDetail(detailData);
 
         // コメントを取得
-        const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}/comments/`, {
+        const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}/comments/`, {
           headers: {
             'accept': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -108,7 +120,7 @@ export default function KnowledgeModal({ content, onClose }) {
         return;
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}/comments/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}/comments/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,11 +130,23 @@ export default function KnowledgeModal({ content, onClose }) {
       });
 
       if (!response.ok) {
+        // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userData');
+          setIsClosing(true);
+          setTimeout(() => {
+            onClose();
+            // ログインページにリダイレクト
+            window.location.href = '/login';
+          }, 300);
+          return;
+        }
         throw new Error(`コメントの送信に失敗しました: ${response.status}`);
       }
 
       // コメントを再取得
-      const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}/comments/`, {
+      const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}/comments/`, {
         headers: {
           'accept': 'application/json',
           'Authorization': `Bearer ${token}`
