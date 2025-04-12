@@ -734,3 +734,31 @@
   font-size: 12px;
   color: #666666;
 }
+
+/* Loading and error styles */
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  color: #666;
+}
+
+.loading-container p {
+  font-size: 16px;
+  color: #333;
+}
+
+.error-container {
+  background-color: #fff0f0;
+}
+
+.error-message {
+  color: #e53935;
+  margin-bottom: 16px;
+}
