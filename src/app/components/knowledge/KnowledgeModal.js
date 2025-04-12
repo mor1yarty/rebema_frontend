@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getMethodColor, getTargetColor } from '../../constants/knowledgeConstants';
 
 /**
  * ナレッジ詳細モーダルコンポーネント
@@ -11,32 +12,6 @@ import { useState, useEffect } from 'react';
 export default function KnowledgeModal({ content, onClose }) {
   const [isClosing, setIsClosing] = useState(false);
   const [comment, setComment] = useState('');
-
-  // 配信手法に応じた背景色を返す関数
-  const getMethodColor = (method) => {
-    switch (method) {
-      case 'メール':
-        return '#DDF4FF';  // 青系
-      case 'SNS':
-        return '#D6FFE4';  // 緑系
-      case 'My東京ガス':
-        return '#FFE4D6';  // オレンジ系
-      default:
-        return '#F0F0F0';  // グレー系
-    }
-  };
-
-  // ターゲットに応じた背景色を返す関数（配信手法の色を薄くする）
-  const getTargetColor = (method) => {
-    switch (method) {
-      case '新規顧客':
-        return '#EEF9FF';  // 薄い青系
-      case '既存顧客':
-        return '#EBFFF2';  // 薄い緑系
-      default:
-        return '#F0F0F0';  // 薄いグレー系
-    }
-  };
 
   // 閉じるアニメーションを制御する関数
   const handleClose = () => {
@@ -115,7 +90,7 @@ export default function KnowledgeModal({ content, onClose }) {
               {/* ターゲット行 */}
               <div className="knowledge-meta-row">
                 <span className="meta-label">ターゲット</span>
-                <div className="meta-tag" style={{ backgroundColor: getTargetColor(content.category) }}>
+                <div className="meta-tag" style={{ backgroundColor: getTargetColor(content.target) }}>
                   <span className="meta-tag-text">{content.target}</span>
                 </div>
               </div>
@@ -146,7 +121,7 @@ export default function KnowledgeModal({ content, onClose }) {
           
           {/* コメントセクション */}
           <div className="comment-section">
-            {content.comments.map((comment, index) => (
+            {content.comments && content.comments.map((comment, index) => (
               <div key={`comment-${index}`} className="comment-item">
                 <div className="comment-timestamp">{comment.createdAt}</div>
                 <div className="comment-content">
