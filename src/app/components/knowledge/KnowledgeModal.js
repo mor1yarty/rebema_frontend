@@ -74,7 +74,16 @@ export default function KnowledgeModal({ content, onClose }) {
     setIsClosing(true);
     // アニメーション完了後に実際に閉じる
     setTimeout(() => {
-      onClose();
+      // もし詳細データが取得できていれば、それを親コンポーネントに渡す
+      if (knowledgeDetail) {
+        onClose({
+          ...content,
+          ...knowledgeDetail,
+          comments: comments
+        });
+      } else {
+        onClose();
+      }
     }, 300); // CSSのアニメーション時間と合わせる
   };
 

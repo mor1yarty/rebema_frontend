@@ -107,6 +107,26 @@ export default function KnowledgePage() {
     fetchKnowledgeData();
   }, [router]);
   
+  // モーダルが閉じられた後にデータを更新する処理
+  const handleModalClose = (updatedContent) => {
+    if (updatedContent) {
+      // 更新されたデータでリストを更新
+      setKnowledgeData(prevData => {
+        return prevData.map(item => {
+          if (item.id === updatedContent.id) {
+            // APIから取得した新しいデータと既存データを統合
+            return {
+              ...item,
+              views: updatedContent.views, // 閲覧数を更新
+              comments: updatedContent.comments || item.comments
+            };
+          }
+          return item;
+        });
+      });
+    }
+  };
+
   // Filter knowledge items based on search query
   const filteredKnowledge = searchQuery
     ? knowledgeData.filter(item => 
@@ -210,6 +230,7 @@ export default function KnowledgePage() {
             showCreateButton={true}
             onCreateClick={handleCreateClick}
             isFiltered={searchQuery !== ''}
+            onModalClose={handleModalClose}
           />
         )}
       </div>

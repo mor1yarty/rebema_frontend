@@ -13,13 +13,15 @@ import './KnowledgeList.css';
  * @param {boolean} props.showCreateButton - 作成ボタンを表示するかどうか
  * @param {function} props.onCreateClick - 作成ボタンクリック時のコールバック
  * @param {boolean} props.isFiltered - 検索フィルターが適用されているかどうか
+ * @param {function} props.onModalClose - モーダルが閉じられた時のコールバック
  */
 export default function KnowledgeList({ 
   knowledgeData, 
   title, 
   showCreateButton = false, 
   onCreateClick,
-  isFiltered = false
+  isFiltered = false,
+  onModalClose
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -31,8 +33,12 @@ export default function KnowledgeList({
   };
 
   // Function to close modal
-  const closeModal = () => {
+  const closeModal = (updatedContent) => {
     setIsModalOpen(false);
+    // 更新されたコンテンツがある場合は親コンポーネントに通知
+    if (updatedContent && onModalClose) {
+      onModalClose(updatedContent);
+    }
     setModalContent(null);
   };
 
