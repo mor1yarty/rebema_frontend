@@ -23,16 +23,34 @@ export default function MyPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [toast, setToast] = useState(null);
 
-  const loadUserData = () => {
+  const loadUserData = async () => {
     try {
-      // ローカルストレージからユーザーデータを取得
-      const storedUserData = localStorage.getItem('userData');
-      if (!storedUserData) {
+      // ローカルストレージからトークンを取得
+      const token = localStorage.getItem('token');
+      if (!token) {
         router.push('/login');
         return;
       }
 
-      const data = JSON.parse(storedUserData);
+      setIsLoading(true);
+      
+      // トークンを使用してユーザー情報をAPIから取得
+      const userResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/auth/me`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!userResponse.ok) {
+        throw new Error('ユーザー情報の取得に失敗しました');
+      }
+      
+      const data = await userResponse.json();
+      
+      // ユーザーデータをローカルストレージに保存（他の場所で使用されることを考慮）
+      localStorage.setItem('userData', JSON.stringify(data));
       
       setUserData({
         name: data.name,
@@ -78,6 +96,8 @@ export default function MyPage() {
       setKnowledgeData(formattedKnowledge);
     } catch (error) {
       console.error('Failed to load user data:', error);
+      // トークンが無効の場合はログイン画面に戻す
+      localStorage.removeItem('token');
       router.push('/login');
     } finally {
       setIsLoading(false);

@@ -42,26 +42,11 @@ export default function Login() {
       }
 
       const { jwt_token: token } = await loginResponse.json();
-
-      // auth/meエンドポイントでユーザー情報を取得
-      const userResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/auth/me`, {
-        headers: {
-          'accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!userResponse.ok) {
-        throw new Error('ユーザー情報の取得に失敗しました');
-      }
-
-      const userData = await userResponse.json();
       
-      // トークンとユーザー情報をローカルストレージに保存
+      // トークンのみをローカルストレージに保存
       localStorage.setItem('token', token);
-      localStorage.setItem('userData', JSON.stringify(userData));
 
-      // マイページへ遷移
+      // マイページへ遷移（ユーザー情報の取得はマイページで行う）
       router.push('/mypage');
     } catch (error) {
       console.error('Login error:', error);
