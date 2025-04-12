@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import { KnowledgeList, CreateKnowledgeModal } from '../components/knowledge';
 import Toast from '../components/Toast';
+import { METHOD_MAPPING, TARGET_MAPPING } from '../constants/knowledgeConstants';
 import './mypage.css';
 
 // 次のレベルに必要な経験値を計算する関数
@@ -84,35 +85,18 @@ export default function MyPage() {
         avatar: data.avatar || '/avatar1.jpg'
       });
 
-      // メソッドとターゲットの数値を文字列に変換する関数
-      const getMethodString = (methodId) => {
-        switch (methodId) {
-          case 1: return 'メール';
-          case 2: return 'SNS';
-          case 3: return 'My東京ガス';
-          default: return '未分類';
-        }
-      };
-
-      const getTargetString = (targetId) => {
-        switch (targetId) {
-          case 1: return '新規顧客';
-          case 2: return '既存顧客';
-          default: return 'その他';
-        }
-      };
-
       // 知識データを活動履歴から変換
       const formattedKnowledge = data.activity?.map(item => ({
         id: item.id,
         title: item.title,
-        category: getMethodString(Number(item.method)),
-        target: getTargetString(Number(item.target)),
+        category: METHOD_MAPPING[item.method] || '不明',
+        target: TARGET_MAPPING[item.target] || '不明',
         author: item.author,
         views: item.views,
         createdAt: item.createdAt,
-        content: item.content,
-        comments: item.comments
+        // モーダル表示の仕様変更により、以下のフィールドは削除
+        // content: item.content,
+        // comments: item.comments
       })) || [];
 
       setKnowledgeData(formattedKnowledge);
