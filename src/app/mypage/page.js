@@ -48,7 +48,7 @@ export default function MyPage() {
       setIsLoading(true);
       
       // トークンを使用してユーザー情報をAPIから取得
-      const userResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/auth/me`, {
+      const userResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/auth/me`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -188,7 +188,7 @@ export default function MyPage() {
       }
       
       // APIを呼び出してデータを保存
-      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

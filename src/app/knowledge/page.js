@@ -47,7 +47,7 @@ export default function KnowledgePage() {
         }
         
         // APIからナレッジデータを取得
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/?limit=20&offset=0`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/?limit=20&offset=0`, {
           headers: {
             'accept': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -177,7 +177,7 @@ export default function KnowledgePage() {
       }
       
       // APIを呼び出してデータを保存
-      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

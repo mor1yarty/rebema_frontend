@@ -30,7 +30,7 @@ export default function KnowledgeModal({ content, onClose }) {
         }
 
         // ナレッジ詳細を取得
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}`, {
           headers: {
             'accept': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -57,7 +57,7 @@ export default function KnowledgeModal({ content, onClose }) {
         setKnowledgeDetail(detailData);
 
         // コメントを取得
-        const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}/comments/`, {
+        const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}/comments/`, {
           headers: {
             'accept': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -120,7 +120,7 @@ export default function KnowledgeModal({ content, onClose }) {
         return;
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}/comments/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}/comments/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export default function KnowledgeModal({ content, onClose }) {
       }
 
       // コメントを再取得
-      const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/${content.id}/comments/`, {
+      const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}/comments/`, {
         headers: {
           'accept': 'application/json',
           'Authorization': `Bearer ${token}`
