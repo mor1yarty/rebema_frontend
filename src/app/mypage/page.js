@@ -10,10 +10,19 @@ import { METHOD_MAPPING, TARGET_MAPPING } from '../constants/knowledgeConstants'
 import './mypage.css';
 
 // 次のレベルに必要な経験値を計算する関数
-const calculateNextLevelExp = (currentLevel, currentExp) => {
-  const baseExp = 1000; // レベル1から2への基準経験値
-  const nextLevelTotalExp = Math.floor(baseExp * Math.pow(1.2, currentLevel - 1));
-  return nextLevelTotalExp - currentExp;
+const calculateNextLevelExp = (currentLevel, totalExp) => {
+  const expPerLevel = 100; // 各レベルアップに必要な経験値量は100
+  // 次のレベルに必要な残りの経験値 = 100 - (総経験値 % 100)
+  const remainingExp = expPerLevel - (totalExp % expPerLevel);
+  return remainingExp;
+};
+
+// 経験値バーの進捗率（%）を計算する関数
+const calculateExpBarPercentage = (totalExp) => {
+  const expPerLevel = 100; // 各レベルアップに必要な経験値量は100
+  // 現在のレベル内での進捗率 = (総経験値 % 100) / 100 * 100%
+  const percentage = (totalExp % expPerLevel) / expPerLevel * 100;
+  return percentage;
 };
 
 export default function MyPage() {
@@ -79,7 +88,9 @@ export default function MyPage() {
         name: data.name,
         department: data.department || '',
         level: data.level,
+        experiencePoints: data.experiencePoints, // 総経験値を保存
         nextLevelExp: calculateNextLevelExp(data.level, data.experiencePoints),
+        expBarPercentage: calculateExpBarPercentage(data.experiencePoints), // 経験値バーの進捗率を計算
         knowledgeCount: data.activity?.length || 0,
         totalPageViews: data.activity?.reduce((sum, item) => sum + item.views, 0) || 0,
         avatar: data.avatar || '/avatar1.jpg'
@@ -245,7 +256,7 @@ export default function MyPage() {
             <div className="level-number">Lv.{userData.level}</div>
             <div className="exp-bar-container">
               <div className="exp-bar-background">
-                <div className="exp-bar-progress"></div>
+                <div className="exp-bar-progress" style={{ width: `${userData.expBarPercentage}%` }}></div>
               </div>
               <div className="exp-text">次のレベルまで　{userData.nextLevelExp} EXP</div>
             </div>
