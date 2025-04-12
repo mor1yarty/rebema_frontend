@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import KnowledgeItem from './KnowledgeItem';
 import KnowledgeModal from './KnowledgeModal';
 import './KnowledgeList.css';
@@ -23,18 +24,44 @@ export default function KnowledgeList({
   isFiltered = false,
   onModalClose
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  
+  // URLからナレッジIDを取得
+  useEffect(() => {
+    // URLに含まれるハッシュ部分を取得
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#')) {
+      const knowledgeId = hash.substring(1); // '#'を除去してIDを取得
+      
+      // IDに該当するナレッジを探す
+      const knowledge = knowledgeData.find(item => item.id === knowledgeId);
+      if (knowledge) {
+        // 見つかった場合はモーダルを開く
+        setModalContent(knowledge);
+        setIsModalOpen(true);
+      }
+    }
+  }, [knowledgeData]);
   
   // Function to open modal with content
   const openModal = (content) => {
     setModalContent(content);
     setIsModalOpen(true);
+    
+    // URLの末尾にナレッジIDを追加
+    window.history.pushState({}, '', `${pathname}#${content.id}`);
   };
 
   // Function to close modal
   const closeModal = (updatedContent) => {
     setIsModalOpen(false);
+    
+    // URLからナレッジIDを削除
+    window.history.pushState({}, '', pathname);
+    
     // 更新されたコンテンツがある場合は親コンポーネントに通知
     if (updatedContent && onModalClose) {
       onModalClose(updatedContent);

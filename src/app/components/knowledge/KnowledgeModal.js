@@ -69,6 +69,18 @@ export default function KnowledgeModal({ content, onClose }) {
     fetchKnowledgeDetail();
   }, [content.id]);
 
+  // ブラウザの戻るボタンが押された時にモーダルを閉じる
+  useEffect(() => {
+    const handlePopState = () => {
+      handleClose();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   // 閉じるアニメーションを制御する関数
   const handleClose = () => {
     setIsClosing(true);
