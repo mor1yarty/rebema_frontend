@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,19 @@ export default function Login() {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [knowledgeId, setKnowledgeId] = useState('');
+
+  // URLからナレッジIDを取得
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // URLのハッシュ部分（#以降）を取得
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#')) {
+        const id = hash.substring(1);
+        setKnowledgeId(id);
+      }
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,27 +55,17 @@ export default function Login() {
       }
 
       const { jwt_token: token } = await loginResponse.json();
-
-      // auth/meエンドポイントでユーザー情報を取得
-      const userResponse = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/auth/me`, {
-        headers: {
-          'accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!userResponse.ok) {
-        throw new Error('ユーザー情報の取得に失敗しました');
-      }
-
-      const userData = await userResponse.json();
       
-      // トークンとユーザー情報をローカルストレージに保存
+      // トークンのみをローカルストレージに保存
       localStorage.setItem('token', token);
-      localStorage.setItem('userData', JSON.stringify(userData));
 
-      // マイページへ遷移
-      router.push('/mypage');
+      // ナレッジIDが存在する場合は、ハッシュ付きでナレッジページへ遷移
+      if (knowledgeId) {
+        router.push(`/knowledge#${knowledgeId}`);
+      } else {
+        // 通常どおりマイページへ遷移
+        router.push('/mypage');
+      }
     } catch (error) {
       console.error('Login error:', error);
       setLoginError('ログインに失敗しました。メールアドレスとパスワードを確認してください。');
@@ -83,6 +86,13 @@ export default function Login() {
           <div className="logo-section flex justify-center mb-12">
             <Logo size="medium" />
           </div>
+
+          {/* ナレッジID表示（デバッグ用、実際の実装では非表示にする） */}
+          {knowledgeId && (
+            <div className="notification-box mb-4">
+              特定のナレッジを表示するためにログインしてください
+            </div>
+          )}
 
           {/* ログインフォーム */}
           <form onSubmit={handleLogin}>
