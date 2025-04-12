@@ -1,75 +1,98 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import './ranking.css';
 
-// Mock data for rankings
-const rankingData = [
-  { 
-    id: 1, 
-    position: '1st', 
-    name: '中村千佳', 
-    department: 'デジタルマーケティング部', 
-    level: 34, 
-    avatar: '/avatar1.jpg' 
-  },
-  { 
-    id: 2, 
-    position: '2nd', 
-    name: '山口悠真', 
-    department: 'マーケティング部', 
-    level: 31, 
-    avatar: '/avatar2.jpg' 
-  },
-  { 
-    id: 3, 
-    position: '3rd', 
-    name: '川谷陸', 
-    department: 'エンジニアリング部', 
-    level: 27, 
-    avatar: '/avatar3.jpg' 
-  },
-  { 
-    id: 4, 
-    position: '4th', 
-    name: '田中一郎', 
-    department: 'デザイン部', 
-    level: 24, 
-    avatar: '/avatar4.jpg' 
-  },
-  { 
-    id: 5, 
-    position: '5th', 
-    name: '佐藤健太', 
-    department: 'マーケティング部', 
-    level: 23, 
-    avatar: '/avatar5.jpg' 
-  },
-];
-
-// 順位に応じたCSSクラスを取得する関数
-const getRankingClass = (index) => {
-  if (index === 0) return 'first';
-  if (index === 1) return 'second';
-  if (index === 2) return 'third';
-  return '';
-};
-
 export default function Ranking() {
-  // Get the top ranking user (1st position)
-  const topUser = rankingData[0];
-  
-  // Get the remaining users (2nd position and below)
-  const otherUsers = rankingData.slice(1);
+  const [rankingData, setRankingData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // API からランキングデータを取得する
+    const fetchRankingData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/ranking/ranking/level?limit=20`);
+        
+        if (!response.ok) {
+          throw new Error('ランキングデータの取得に失敗しました');
+        }
+        
+        const data = await response.json();
+        setRankingData(data);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setIsLoading(false);
+        console.error('ランキングデータ取得エラー:', err);
+      }
+    };
+
+    fetchRankingData();
+  }, []);
+
+  // 順位に応じたCSSクラスを取得する関数
+  const getRankingClass = (index) => {
+    if (index === 0) return 'first';
+    if (index === 1) return 'second';
+    if (index === 2) return 'third';
+    return '';
+  };
 
   const userData = {
     name: '中村千佳',
     department: 'デジタルマーケティング部',
     level: 34
   };
+  
+  // ローディング中の表示
+  if (isLoading) {
+    return (
+      <div className="page-container">
+        <Sidebar userData={userData} />
+        <Header />
+        <div className="main-content">
+          <div className="loading">ランキングデータを読み込み中...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // エラー時の表示
+  if (error) {
+    return (
+      <div className="page-container">
+        <Sidebar userData={userData} />
+        <Header />
+        <div className="main-content">
+          <div className="error">{error}</div>
+        </div>
+      </div>
+    );
+  }
+
+  // データが空の場合の表示
+  if (rankingData.length === 0) {
+    return (
+      <div className="page-container">
+        <Sidebar userData={userData} />
+        <Header />
+        <div className="main-content">
+          <div className="no-data">ランキングデータがありません</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Get the top ranking user (1st position)
+  const topUser = rankingData[0];
+  
+  // Get the remaining users (2nd position and below)
+  const otherUsers = rankingData.slice(1);
     
   return (
     <div className="page-container">
