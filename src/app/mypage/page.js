@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import { KnowledgeList, CreateKnowledgeModal } from '../components/knowledge';
+import Toast from '../components/Toast';
 import './mypage.css';
 
 // 次のレベルに必要な経験値を計算する関数
@@ -20,6 +21,7 @@ export default function MyPage() {
   const [userData, setUserData] = useState(null);
   const [knowledgeData, setKnowledgeData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const loadUserData = () => {
@@ -90,31 +92,62 @@ export default function MyPage() {
     setIsCreateModalOpen(true);
   };
 
+  // トースト表示を閉じる処理
+  const handleToastClose = () => {
+    setToast(null);
+  };
+
   const handleSubmit = async (formData) => {
-    // APIを呼び出してデータを保存
     try {
-      const response = await fetch('/api/knowledge', {
+      // ローカルストレージからトークンを取得
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.push('/login');
+        return;
+      }
+      
+      // APIを呼び出してデータを保存
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData),
+        body: formData // FormDataオブジェクトをそのまま送信
       });
       
       if (!response.ok) {
-        throw new Error('Failed to create knowledge');
+        throw new Error(`ナレッジの作成に失敗しました: ${response.status}`);
       }
-
+      
+      // レスポンスデータを取得
+      const responseData = await response.json();
+      
+      // モーダルを閉じる
       setIsCreateModalOpen(false);
-      // 新しいデータを取得するためにページをリロード
-      window.location.reload();
+      
+      // 成功トーストを表示
+      setToast({
+        message: 'ナレッジを作成しました',
+        type: 'success'
+      });
+      
+      // ナレッジリストを更新するためにデータを再取得
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
-      console.error('Error creating knowledge:', error);
+      console.error('ナレッジ作成エラー:', error);
+      
+      // エラートーストを表示
+      setToast({
+        message: error.message,
+        type: 'error'
+      });
     }
   };
 
   if (isLoading) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading">データを読み込み中...</div>;
   }
 
   return (
@@ -171,6 +204,15 @@ export default function MyPage() {
         <CreateKnowledgeModal 
           onClose={() => setIsCreateModalOpen(false)}
           onSubmit={handleSubmit}
+        />
+      )}
+      
+      {/* トースト通知 */}
+      {toast && (
+        <Toast 
+          message={toast.message}
+          type={toast.type}
+          onClose={handleToastClose}
         />
       )}
     </div>

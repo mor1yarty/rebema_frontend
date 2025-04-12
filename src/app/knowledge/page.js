@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import { KnowledgeList, SearchBar, CreateKnowledgeModal } from '../components/knowledge';
+import Toast from '../components/Toast';
 import { METHOD_MAPPING, TARGET_MAPPING } from '../constants/knowledgeConstants';
 import './knowledge.css';
 
@@ -16,6 +17,7 @@ export default function KnowledgePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [toast, setToast] = useState(null);
   
   // APIからナレッジデータを取得する
   useEffect(() => {
@@ -37,8 +39,8 @@ export default function KnowledgePage() {
           setUserInfo(JSON.parse(storedUserData));
         }
         
-        // API URLは環境変数から取得するのがベストですが、ここではサンプルのためにハードコード
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/?limit=20&offset=0`, {
+        // APIからナレッジデータを取得
+        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/?limit=20&offset=0`, {
           headers: {
             'accept': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -125,6 +127,11 @@ export default function KnowledgePage() {
     setIsCreateModalOpen(true);
   };
 
+  // トースト表示を閉じる処理
+  const handleToastClose = () => {
+    setToast(null);
+  };
+
   // Function to handle form submission
   const handleSubmit = async (formData) => {
     try {
@@ -135,14 +142,43 @@ export default function KnowledgePage() {
         return;
       }
       
-      // APIを呼び出してデータを保存する処理（実装例）
-      console.log('Form submitted:', formData);
+      // APIを呼び出してデータを保存
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT || 'http://localhost:8000'}/knowledge/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData // FormDataオブジェクトをそのまま送信
+      });
+      
+      if (!response.ok) {
+        throw new Error(`ナレッジの作成に失敗しました: ${response.status}`);
+      }
+      
+      // レスポンスデータを取得
+      const responseData = await response.json();
+      
+      // モーダルを閉じる
       setIsCreateModalOpen(false);
       
-      // 新しいデータを取得するためにページをリロード
-      window.location.reload();
+      // 成功トーストを表示
+      setToast({
+        message: 'ナレッジを作成しました',
+        type: 'success'
+      });
+      
+      // ナレッジリストを更新するためにデータを再取得
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
-      console.error('Error creating knowledge:', error);
+      console.error('ナレッジ作成エラー:', error);
+      
+      // エラートーストを表示
+      setToast({
+        message: error.message,
+        type: 'error'
+      });
     }
   };
   
@@ -183,6 +219,15 @@ export default function KnowledgePage() {
         <CreateKnowledgeModal 
           onClose={() => setIsCreateModalOpen(false)}
           onSubmit={handleSubmit}
+        />
+      )}
+      
+      {/* トースト通知 */}
+      {toast && (
+        <Toast 
+          message={toast.message}
+          type={toast.type}
+          onClose={handleToastClose}
         />
       )}
     </div>
