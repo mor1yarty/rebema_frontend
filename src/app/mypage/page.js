@@ -57,6 +57,15 @@ export default function MyPage() {
       });
       
       if (!userResponse.ok) {
+        // 401エラーの場合はトークンが無効（期限切れなど）のためログインページにリダイレクト
+        if (userResponse.status === 401) {
+          // トークンを削除
+          localStorage.removeItem('token');
+          localStorage.removeItem('userData');
+          // ログインページにリダイレクト
+          router.push('/login');
+          return;
+        }
         throw new Error('ユーザー情報の取得に失敗しました');
       }
       
@@ -188,6 +197,14 @@ export default function MyPage() {
       });
       
       if (!response.ok) {
+        // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userData');
+          // ログインページにリダイレクト
+          router.push('/login');
+          return;
+        }
         throw new Error(`ナレッジの作成に失敗しました: ${response.status}`);
       }
       

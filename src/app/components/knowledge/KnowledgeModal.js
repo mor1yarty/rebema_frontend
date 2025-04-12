@@ -38,6 +38,18 @@ export default function KnowledgeModal({ content, onClose }) {
         });
 
         if (!response.ok) {
+          // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
+          if (response.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userData');
+            setIsClosing(true);
+            setTimeout(() => {
+              onClose();
+              // ログインページにリダイレクト
+              window.location.href = '/login';
+            }, 300);
+            return;
+          }
           throw new Error(`ナレッジ詳細の取得に失敗しました: ${response.status}`);
         }
 
@@ -118,6 +130,18 @@ export default function KnowledgeModal({ content, onClose }) {
       });
 
       if (!response.ok) {
+        // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userData');
+          setIsClosing(true);
+          setTimeout(() => {
+            onClose();
+            // ログインページにリダイレクト
+            window.location.href = '/login';
+          }, 300);
+          return;
+        }
         throw new Error(`コメントの送信に失敗しました: ${response.status}`);
       }
 

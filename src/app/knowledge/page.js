@@ -186,6 +186,16 @@ export default function KnowledgePage() {
       });
       
       if (!response.ok) {
+        // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userData');
+          // モーダルを閉じる
+          setIsCreateModalOpen(false);
+          // ログインページにリダイレクト
+          router.push('/login');
+          return;
+        }
         throw new Error(`ナレッジの作成に失敗しました: ${response.status}`);
       }
       
