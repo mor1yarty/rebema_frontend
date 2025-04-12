@@ -21,17 +21,67 @@ export default function KnowledgePage() {
   
   // APIからナレッジデータを取得する
   useEffect(() => {
-    const fetchKnowledgeData = async () => {
-      setIsLoading(true);
-      try {
-        // ローカルストレージからトークンを取得
-        const token = localStorage.getItem('token');
-        
-        // トークンがない場合はログインページにリダイレクト（URLハッシュを保持）
-        if (!token) {
+    fetchKnowledgeData();
+  }, [router]);
+  
+  // 検索クエリが変更された時にAPIから新しいデータを取得
+  useEffect(() => {
+    if (searchQuery !== undefined) {
+      // 検索実行時にローディング状態に設定
+      fetchKnowledgeData(searchQuery);
+    }
+  }, [searchQuery]);
+  
+  const fetchKnowledgeData = async (keyword = '') => {
+    setIsLoading(true);
+    try {
+      // ローカルストレージからトークンを取得
+      const token = localStorage.getItem('token');
+      
+      // トークンがない場合はログインページにリダイレクト（URLハッシュを保持）
+      if (!token) {
+        // 現在のURLハッシュを取得
+        const hash = window.location.hash;
+        // hashがある場合はそれを付けてリダイレクト、ない場合は通常のリダイレクト
+        if (hash) {
+          router.push(`/login${hash}`);
+        } else {
+          router.push('/login');
+        }
+        return;
+      }
+      
+      // ユーザー情報をローカルストレージから取得
+      const storedUserData = localStorage.getItem('userData');
+      if (storedUserData) {
+        setUserInfo(JSON.parse(storedUserData));
+      }
+      
+      // APIからナレッジデータを取得（キーワード検索を追加）
+      const url = new URL(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/`);
+      url.searchParams.append('limit', '20');
+      url.searchParams.append('offset', '0');
+      
+      // キーワードが存在する場合は検索パラメータに追加
+      if (keyword) {
+        url.searchParams.append('keyword', keyword);
+      }
+      
+      const response = await fetch(url.toString(), {
+        headers: {
+          'accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!response.ok) {
+        // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userData');
           // 現在のURLハッシュを取得
           const hash = window.location.hash;
-          // hashがある場合はそれを付けてリダイレクト、ない場合は通常のリダイレクト
+          // hashがある場合はそれを付けてリダイレクト
           if (hash) {
             router.push(`/login${hash}`);
           } else {
@@ -39,87 +89,54 @@ export default function KnowledgePage() {
           }
           return;
         }
-        
-        // ユーザー情報をローカルストレージから取得
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-          setUserInfo(JSON.parse(storedUserData));
-        }
-        
-        // APIからナレッジデータを取得
-        const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/?limit=20&offset=0`, {
-          headers: {
-            'accept': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        if (!response.ok) {
-          // 401エラーの場合はトークンが無効なのでログインページにリダイレクト
-          if (response.status === 401) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('userData');
-            // 現在のURLハッシュを取得
-            const hash = window.location.hash;
-            // hashがある場合はそれを付けてリダイレクト
-            if (hash) {
-              router.push(`/login${hash}`);
-            } else {
-              router.push('/login');
-            }
-            return;
-          }
-          throw new Error(`APIリクエストが失敗しました: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // APIから取得したデータを変換
-        const formattedData = data.map(item => ({
-          id: item.id,
-          title: item.title,
-          // APIのmethodフィールドをcategoryとして使用
-          category: METHOD_MAPPING[item.method] || '不明',
-          target: TARGET_MAPPING[item.target] || '不明',
-          author: item.author.name,
-          views: item.views,
-          createdAt: item.createdAt,
-          // KnowledgeModal用のコメントなどのダミーデータを追加
-          comments: [
-            {
-              author: '田中太郎',
-              content: 'このナレッジは非常に参考になりました。',
-              createdAt: '2025年4月10日 14:30'
-            }
-          ],
-          content: `
-            # ${item.title}
-            
-            ## 概要
-            ${item.title}に関する詳細情報です。
-            
-            ## ターゲット
-            ${TARGET_MAPPING[item.target] || '不明'}
-            
-            ## メソッド
-            ${METHOD_MAPPING[item.method] || '不明'}
-            
-            ## 備考
-            詳細情報はAPI実装後に追加されます。
-          `
-        }));
-        
-        setKnowledgeData(formattedData);
-      } catch (err) {
-        console.error('ナレッジデータの取得に失敗しました:', err);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+        throw new Error(`APIリクエストが失敗しました: ${response.status}`);
       }
-    };
-    
-    fetchKnowledgeData();
-  }, [router]);
+      
+      const data = await response.json();
+      
+      // APIから取得したデータを変換
+      const formattedData = data.map(item => ({
+        id: item.id,
+        title: item.title,
+        // APIのmethodフィールドをcategoryとして使用
+        category: METHOD_MAPPING[item.method] || '不明',
+        target: TARGET_MAPPING[item.target] || '不明',
+        author: item.author.name,
+        views: item.views,
+        createdAt: item.createdAt,
+        // KnowledgeModal用のコメントなどのダミーデータを追加
+        comments: [
+          {
+            author: '田中太郎',
+            content: 'このナレッジは非常に参考になりました。',
+            createdAt: '2025年4月10日 14:30'
+          }
+        ],
+        content: `
+          # ${item.title}
+          
+          ## 概要
+          ${item.title}に関する詳細情報です。
+          
+          ## ターゲット
+          ${TARGET_MAPPING[item.target] || '不明'}
+          
+          ## メソッド
+          ${METHOD_MAPPING[item.method] || '不明'}
+          
+          ## 備考
+          詳細情報はAPI実装後に追加されます。
+        `
+      }));
+      
+      setKnowledgeData(formattedData);
+    } catch (err) {
+      console.error('ナレッジデータの取得に失敗しました:', err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   
   // モーダルが閉じられた後にデータを更新する処理
   const handleModalClose = (updatedContent) => {
