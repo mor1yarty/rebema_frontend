@@ -254,6 +254,7 @@ export default function MyPage() {
           <div className="user-avatar-section">
             <div className="user-avatar" />
             <div className="user-name">{userData.name}</div>
+            <div className="user-department">{userData.department}</div>
           </div>
           
           <div className="level-info">
