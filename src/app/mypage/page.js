@@ -6,13 +6,24 @@ import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import { KnowledgeList, CreateKnowledgeModal } from '../components/knowledge';
 import Toast from '../components/Toast';
+import LevelUpModal from '../components/LevelUpModal';
+import { METHOD_MAPPING, TARGET_MAPPING } from '../constants/knowledgeConstants';
 import './mypage.css';
 
 // 次のレベルに必要な経験値を計算する関数
-const calculateNextLevelExp = (currentLevel, currentExp) => {
-  const baseExp = 1000; // レベル1から2への基準経験値
-  const nextLevelTotalExp = Math.floor(baseExp * Math.pow(1.2, currentLevel - 1));
-  return nextLevelTotalExp - currentExp;
+const calculateNextLevelExp = (currentLevel, totalExp) => {
+  const expPerLevel = 100; // 各レベルアップに必要な経験値量は100
+  // 次のレベルに必要な残りの経験値 = 100 - (総経験値 % 100)
+  const remainingExp = expPerLevel - (totalExp % expPerLevel);
+  return remainingExp;
+};
+
+// 経験値バーの進捗率（%）を計算する関数
+const calculateExpBarPercentage = (totalExp) => {
+  const expPerLevel = 100; // 各レベルアップに必要な経験値量は100
+  // 現在のレベル内での進捗率 = (総経験値 % 100) / 100 * 100%
+  const percentage = (totalExp % expPerLevel) / expPerLevel * 100;
+  return percentage;
 };
 
 export default function MyPage() {
@@ -22,6 +33,8 @@ export default function MyPage() {
   const [knowledgeData, setKnowledgeData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [toast, setToast] = useState(null);
+  const [experienceData, setExperienceData] = useState(null);
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
   useEffect(() => {
     // URLにハッシュが含まれている場合は、ナレッジページにリダイレクト
@@ -78,41 +91,26 @@ export default function MyPage() {
         name: data.name,
         department: data.department || '',
         level: data.level,
-        nextLevelExp: calculateNextLevelExp(data.level, data.experiencePoints),
+        experiencePoints: data.currentXp, // APIレスポンスの変更に対応（experiencePointsからcurrentXpに変更）
+        nextLevelExp: calculateNextLevelExp(data.level, data.currentXp),
+        expBarPercentage: calculateExpBarPercentage(data.currentXp), // 経験値バーの進捗率を計算
         knowledgeCount: data.activity?.length || 0,
         totalPageViews: data.activity?.reduce((sum, item) => sum + item.views, 0) || 0,
         avatar: data.avatar || '/avatar1.jpg'
       });
 
-      // メソッドとターゲットの数値を文字列に変換する関数
-      const getMethodString = (methodId) => {
-        switch (methodId) {
-          case 1: return 'メール';
-          case 2: return 'SNS';
-          case 3: return 'My東京ガス';
-          default: return '未分類';
-        }
-      };
-
-      const getTargetString = (targetId) => {
-        switch (targetId) {
-          case 1: return '新規顧客';
-          case 2: return '既存顧客';
-          default: return 'その他';
-        }
-      };
-
       // 知識データを活動履歴から変換
       const formattedKnowledge = data.activity?.map(item => ({
         id: item.id,
         title: item.title,
-        category: getMethodString(Number(item.method)),
-        target: getTargetString(Number(item.target)),
-        author: item.author,
+        category: METHOD_MAPPING[item.method] || '不明',
+        target: TARGET_MAPPING[item.target] || '不明',
+        author: item.author?.name || data.name, // 著者情報の構造が変更されているため対応
         views: item.views,
         createdAt: item.createdAt,
-        content: item.content,
-        comments: item.comments
+        // モーダル表示の仕様変更により、以下のフィールドは削除
+        // content: item.content,
+        // comments: item.comments
       })) || [];
 
       setKnowledgeData(formattedKnowledge);
@@ -178,6 +176,14 @@ export default function MyPage() {
     setToast(null);
   };
 
+  // レベルアップモーダルを閉じる処理
+  const handleLevelUpModalClose = () => {
+    setIsLevelUpModalOpen(false);
+    
+    // ユーザーデータを再取得してレベルや経験値の表示を更新する
+    loadUserData();
+  };
+
   const handleSubmit = async (formData) => {
     try {
       // ローカルストレージからトークンを取得
@@ -214,16 +220,22 @@ export default function MyPage() {
       // モーダルを閉じる
       setIsCreateModalOpen(false);
       
-      // 成功トーストを表示
-      setToast({
-        message: 'ナレッジを作成しました',
-        type: 'success'
-      });
-      
-      // ナレッジリストを更新するためにデータを再取得
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // 経験値情報がレスポンスに含まれている場合はレベルアップモーダルを表示
+      if (responseData.experience) {
+        setExperienceData(responseData.experience);
+        setIsLevelUpModalOpen(true);
+      } else {
+        // 経験値情報がない場合は従来通りトーストを表示
+        setToast({
+          message: 'ナレッジを作成しました',
+          type: 'success'
+        });
+        
+        // ナレッジリストを更新するためにデータを再取得
+        setTimeout(() => {
+          loadUserData();
+        }, 1000);
+      }
     } catch (error) {
       console.error('ナレッジ作成エラー:', error);
       
@@ -254,13 +266,14 @@ export default function MyPage() {
           <div className="user-avatar-section">
             <div className="user-avatar" />
             <div className="user-name">{userData.name}</div>
+            <div className="user-department">{userData.department}</div>
           </div>
           
           <div className="level-info">
             <div className="level-number">Lv.{userData.level}</div>
             <div className="exp-bar-container">
               <div className="exp-bar-background">
-                <div className="exp-bar-progress"></div>
+                <div className="exp-bar-progress" style={{ width: `${userData.expBarPercentage}%` }}></div>
               </div>
               <div className="exp-text">次のレベルまで　{userData.nextLevelExp} EXP</div>
             </div>
@@ -296,6 +309,13 @@ export default function MyPage() {
           onSubmit={handleSubmit}
         />
       )}
+      
+      {/* レベルアップモーダル */}
+      <LevelUpModal 
+        isOpen={isLevelUpModalOpen}
+        onClose={handleLevelUpModalClose}
+        experience={experienceData}
+      />
       
       {/* トースト通知 */}
       {toast && (

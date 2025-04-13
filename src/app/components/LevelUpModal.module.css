@@ -1,0 +1,103 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 24px;
+  width: 320px;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #3D3D3D;
+}
+
+.title {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #3D3D3D;
+  margin-bottom: 16px;
+  margin-top: 0;
+  text-align: center;
+}
+
+.levelSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.levelDisplay {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 62px;
+  color: #CB831E;
+  line-height: 1.2em;
+}
+
+.progressContainer {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 10px;
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #64C0A0;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.expText {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  color: #494949;
+  text-align: center;
+  letter-spacing: -0.19em;
+}
+
+.expGained {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #64C0A0;
+  margin-top: 16px;
+  text-align: center;
+}
