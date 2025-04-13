@@ -91,9 +91,9 @@ export default function MyPage() {
         name: data.name,
         department: data.department || '',
         level: data.level,
-        experiencePoints: data.experiencePoints, // 総経験値を保存
-        nextLevelExp: calculateNextLevelExp(data.level, data.experiencePoints),
-        expBarPercentage: calculateExpBarPercentage(data.experiencePoints), // 経験値バーの進捗率を計算
+        experiencePoints: data.currentXp, // APIレスポンスの変更に対応（experiencePointsからcurrentXpに変更）
+        nextLevelExp: calculateNextLevelExp(data.level, data.currentXp),
+        expBarPercentage: calculateExpBarPercentage(data.currentXp), // 経験値バーの進捗率を計算
         knowledgeCount: data.activity?.length || 0,
         totalPageViews: data.activity?.reduce((sum, item) => sum + item.views, 0) || 0,
         avatar: data.avatar || '/avatar1.jpg'
@@ -105,7 +105,7 @@ export default function MyPage() {
         title: item.title,
         category: METHOD_MAPPING[item.method] || '不明',
         target: TARGET_MAPPING[item.target] || '不明',
-        author: item.author,
+        author: item.author?.name || data.name, // 著者情報の構造が変更されているため対応
         views: item.views,
         createdAt: item.createdAt,
         // モーダル表示の仕様変更により、以下のフィールドは削除
