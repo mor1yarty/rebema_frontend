@@ -142,7 +142,7 @@ export default function KnowledgePage() {
   };
   
   // モーダルが閉じられた後にデータを更新する処理
-  const handleModalClose = (updatedContent) => {
+  const handleModalClose = async (updatedContent) => {
     if (updatedContent) {
       // 更新されたデータでリストを更新
       setKnowledgeData(prevData => {
@@ -159,6 +159,9 @@ export default function KnowledgePage() {
         });
       });
     }
+    
+    // モーダルが閉じられた時にAPIリクエストを送信して画面をリフレッシュ
+    await fetchKnowledgeData();
   };
 
   // レベルアップモーダルを閉じる処理
