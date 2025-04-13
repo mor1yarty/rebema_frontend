@@ -316,13 +316,49 @@
   gap: 29px;
 }
 
+/* 編集・削除ボタンをタイトルの上に配置するスタイル */
+.modal-actions-top {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0px;
+  margin-top: 24px;
+}
+
+.edit-button, .delete-button {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.edit-button {
+  background-color: #EDF2FF;
+  color: #1F47F7;
+}
+
+.edit-button:hover {
+  background-color: #D6E4FF;
+}
+
+.delete-button {
+  background-color: #FFF0F0;
+  color: #E53935;
+}
+
+.delete-button:hover {
+  background-color: #FFD7D7;
+}
+
 /* モーダルヘッダー部分 - Figmaデザインに合わせて更新 */
 .modal-header-container {
   display: flex;
   flex-direction: column;
   gap: 32px;
   width: 100%;
-  padding-top: 40px; /* 上部にパディングを追加 */
+  padding-top: 0px; /* 上部にパディングを追加 */
 }
 
 .modal-header {

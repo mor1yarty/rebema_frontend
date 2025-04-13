@@ -22,8 +22,17 @@ const LevelUpModal = ({ isOpen, onClose, experience }) => {
   const nextLevelExp = experience.required_xp - experience.after_xp;
   const progressPercent = (experience.after_xp / experience.required_xp) * 100;
 
+  // オーバーレイのクリックを処理する関数
+  const handleOverlayClick = (e) => {
+    // クリックがオーバーレイ自体に対して行われた場合にのみ閉じる
+    // (モーダル内部のクリックは閉じない）
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className={styles.modalOverlay}>
+    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
       <div className={styles.modal}>
         <button className={styles.closeButton} onClick={onClose}>×</button>
         
