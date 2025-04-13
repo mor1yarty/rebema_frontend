@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import { KnowledgeList, SearchBar, CreateKnowledgeModal } from '../components/knowledge';
 import Toast from '../components/Toast';
+import LevelUpModal from '../components/LevelUpModal';
 import { METHOD_MAPPING, TARGET_MAPPING } from '../constants/knowledgeConstants';
 import './knowledge.css';
 
@@ -18,6 +19,8 @@ export default function KnowledgePage() {
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [toast, setToast] = useState(null);
+  const [experienceData, setExperienceData] = useState(null);
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   
   // APIからナレッジデータを取得する
   useEffect(() => {
@@ -158,6 +161,14 @@ export default function KnowledgePage() {
     }
   };
 
+  // レベルアップモーダルを閉じる処理
+  const handleLevelUpModalClose = () => {
+    setIsLevelUpModalOpen(false);
+    
+    // ナレッジリストを更新するためにデータを再取得
+    fetchKnowledgeData();
+  };
+
   // Filter knowledge items based on search query
   const filteredKnowledge = searchQuery
     ? knowledgeData.filter(item => 
@@ -222,16 +233,22 @@ export default function KnowledgePage() {
       // モーダルを閉じる
       setIsCreateModalOpen(false);
       
-      // 成功トーストを表示
-      setToast({
-        message: 'ナレッジを作成しました',
-        type: 'success'
-      });
-      
-      // ナレッジリストを更新するためにデータを再取得
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // 経験値情報がレスポンスに含まれている場合はレベルアップモーダルを表示
+      if (responseData.experience) {
+        setExperienceData(responseData.experience);
+        setIsLevelUpModalOpen(true);
+      } else {
+        // 経験値情報がない場合は従来通りトーストを表示
+        setToast({
+          message: 'ナレッジを作成しました',
+          type: 'success'
+        });
+        
+        // ナレッジリストを更新するためにデータを再取得
+        setTimeout(() => {
+          fetchKnowledgeData();
+        }, 1000);
+      }
     } catch (error) {
       console.error('ナレッジ作成エラー:', error);
       
@@ -283,6 +300,13 @@ export default function KnowledgePage() {
           onSubmit={handleSubmit}
         />
       )}
+      
+      {/* レベルアップモーダル */}
+      <LevelUpModal 
+        isOpen={isLevelUpModalOpen}
+        onClose={handleLevelUpModalClose}
+        experience={experienceData}
+      />
       
       {/* トースト通知 */}
       {toast && (

@@ -168,20 +168,6 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
               </select>
             </div>
             
-            {/* カテゴリ（オプション） */}
-            {/* <div className="knowledge-detail-section">
-              <div className="knowledge-detail-label">カテゴリ（任意）</div>
-              <input 
-                type="text" 
-                className="knowledge-detail-content"
-                style={{ minHeight: 'auto' }}
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                placeholder="カテゴリを入力（任意）"
-              />
-            </div> */}
-            
             {/* コンテンツ本文 */}
             <div className="knowledge-detail-section">
               <div className="knowledge-detail-label">内容</div>
@@ -195,19 +181,6 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
                 rows="8"
               />
             </div>
-            
-            {/* ファイルアップロード（オプション） */}
-            {/* <div className="knowledge-detail-section">
-              <div className="knowledge-detail-label">ファイル添付（任意）</div>
-              <input 
-                type="file" 
-                className="knowledge-detail-content"
-                style={{ minHeight: 'auto', padding: '8px' }}
-                name="files"
-                onChange={handleFileChange}
-                multiple
-              />
-            </div> */}
             
             {/* フッターアクション */}
             <div className="modal-footer">
