@@ -228,6 +228,30 @@ export default function KnowledgeModal({ content, onClose }) {
         <button className="close-button" onClick={handleClose}>×</button>
         
         <div className="knowledge-detail">
+          {/* 編集・削除ボタン - タイトルの上部左上に配置 */}
+          <div className="modal-actions-top">
+            <button 
+              className="edit-button" 
+              onClick={(e) => {
+                e.stopPropagation();
+                // 編集処理はまだ実装していない
+                console.log('Edit clicked for:', displayData.id);
+              }}
+            >
+              編集
+            </button>
+            <button 
+              className="delete-button" 
+              onClick={(e) => {
+                e.stopPropagation();
+                // 削除処理はまだ実装していない
+                console.log('Delete clicked for:', displayData.id);
+              }}
+            >
+              削除
+            </button>
+          </div>
+
           {/* ヘッダー部分 */}
           <div className="modal-header-container">
             <div className="modal-header">
@@ -298,18 +322,18 @@ export default function KnowledgeModal({ content, onClose }) {
           </div>
           
           {/* 区切り線 */}
-          <div className="meta-divider"></div>
+          {/* <div className="meta-divider"></div> */}
           
           {/* コンテンツ本文 */}
           <div className="knowledge-detail-section">
-            <div className="knowledge-detail-label">内容</div>
+          <span className="meta-label">内容</span>
             <div className="knowledge-detail-content">
               {knowledgeDetail?.description || displayData.content}
             </div>
           </div>
           
           {/* 区切り線 */}
-          <div className="meta-divider"></div>
+          {/* <div className="meta-divider"></div> */}
           
           {/* コメントセクション */}
           <div className="comment-section">
