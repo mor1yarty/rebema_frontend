@@ -26,6 +26,7 @@ export default function KnowledgeModal({ content, onClose }) {
     category: ''
   });
   const [toast, setToast] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false); // 削除中の状態を管理
 
   // APIからナレッジ詳細を取得
   useEffect(() => {
@@ -234,6 +235,71 @@ export default function KnowledgeModal({ content, onClose }) {
     }
   };
 
+  // ナレッジ削除処理
+  const handleDelete = async () => {
+    if (!confirm('このナレッジを削除してもよろしいですか？')) {
+      return;
+    }
+
+    setIsDeleting(true);
+    
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('認証エラー：再ログインしてください');
+        return;
+      }
+
+      // ナレッジ削除リクエスト
+      const response = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/${content.id}`, {
+        method: 'DELETE',
+        headers: {
+          'accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      // レスポンスを処理
+      if (response.ok) {
+        const result = await response.json();
+        console.log('削除成功:', result);
+        
+        // 成功トーストを表示
+        setToast({
+          message: 'ナレッジを削除しました',
+          type: 'success',
+          duration: 3000
+        });
+        
+        // モーダルを閉じる前に少し待つ（トーストを見せるため）
+        setTimeout(() => {
+          handleClose();
+        }, 1000);
+      } else {
+        // エラーハンドリング
+        if (response.status === 403) {
+          setToast({
+            message: '作成者のみが削除可能です。',
+            type: 'error',
+            duration: 3000
+          });
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.detail || `ナレッジの削除に失敗しました: ${response.status}`);
+        }
+      }
+    } catch (err) {
+      console.error('削除エラー:', err);
+      setToast({
+        message: err.message,
+        type: 'error',
+        duration: 3000
+      });
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   // コメント送信処理
   const handleSubmit = async () => {
     try {
@@ -359,6 +425,7 @@ export default function KnowledgeModal({ content, onClose }) {
                 e.stopPropagation();
                 toggleEditMode();
               }}
+              disabled={isDeleting}
             >
               {isEditing ? 'キャンセル' : '編集'}
             </button>
@@ -366,11 +433,11 @@ export default function KnowledgeModal({ content, onClose }) {
               className="delete-button" 
               onClick={(e) => {
                 e.stopPropagation();
-                // 削除処理はまだ実装していない
-                console.log('Delete clicked for:', displayData.id);
+                handleDelete();
               }}
+              disabled={isDeleting || isEditing}
             >
-              削除
+              {isDeleting ? '削除中...' : '削除'}
             </button>
           </div>
 
