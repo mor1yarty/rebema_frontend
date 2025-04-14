@@ -15,7 +15,7 @@ export default function Sidebar({ userData }) {
     name: '中村千佳',
     department: 'デジタルマーケティング部',
     level: 34,
-    avatar_url: '/default-avatar.png' // デフォルトのアバター画像パスを追加
+    avatar_url: '/avatar1.jpg' // デフォルトのアバター画像パスを追加
   };
   
   const handleLogout = () => {
@@ -61,7 +61,7 @@ export default function Sidebar({ userData }) {
           <div 
             className="profile-avatar" 
             style={{ 
-              backgroundImage: `url(${user.avatar || '/default-avatar.png'})`,
+              backgroundImage: `url(${user.avatar || '/avatar1.jpg'})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center'
             }} 

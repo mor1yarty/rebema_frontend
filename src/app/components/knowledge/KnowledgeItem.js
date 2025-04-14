@@ -33,8 +33,10 @@ export default function KnowledgeItem({ item, onClick }) {
         </div>
         <div className="knowledge-author">
           <div className="author-avatar">
-            {item.authorAvatar && (
+            {item.authorAvatar ? (
               <img src={item.authorAvatar} alt={`${item.author}のアバター`} className="avatar-image" />
+            ) : (
+              <img src="/avatar1.jpg" alt="デフォルトアバター" className="avatar-image" />
             )}
           </div>
           <span className="author-name">{item.author}</span>
