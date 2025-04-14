@@ -244,6 +244,17 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.clickable:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.12);
+}
+
 .knowledgeTitle {
   font-size: 16px;
   font-weight: 600;
