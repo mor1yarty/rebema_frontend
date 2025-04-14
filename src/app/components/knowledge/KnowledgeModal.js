@@ -610,7 +610,16 @@ export default function KnowledgeModal({ content, onClose }) {
                     </div>
                     <div className="comment-content">
                       <div className="comment-user">
-                        <div className="comment-avatar"></div>
+                        <div 
+                          className="comment-avatar"
+                          style={{ 
+                            backgroundImage: comment.author?.avatarUrl || comment.avatar_url ? 
+                              `url(${comment.author?.avatarUrl || comment.avatar_url})` : 
+                              `url(/avatar1.jpg)`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                          }}
+                        ></div>
                         <div className="comment-username">
                           {comment.author?.name || comment.author_name || comment.author}
                         </div>
