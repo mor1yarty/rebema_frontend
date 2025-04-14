@@ -267,7 +267,14 @@ export default function MyPage() {
         {/* ユーザー情報カード */}
         <div className="user-info-card">
           <div className="user-avatar-section">
-            <div className="user-avatar" />
+            <div 
+              className="user-avatar" 
+              style={{ 
+                backgroundImage: `url(${userData.avatar})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }} 
+            />
             <div className="user-name">{userData.name}</div>
             <div className="user-department">{userData.department}</div>
           </div>
