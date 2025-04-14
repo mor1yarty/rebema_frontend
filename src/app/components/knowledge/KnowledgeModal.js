@@ -527,7 +527,16 @@ export default function KnowledgeModal({ content, onClose }) {
                   <div className="knowledge-meta-row">
                     <span className="meta-label">作成者</span>
                     <div className="meta-author-container">
-                      <div className="meta-author-avatar"></div>
+                      <div 
+                        className="meta-author-avatar" 
+                        style={{ 
+                          backgroundImage: displayData.author?.avatarUrl ? 
+                            `url(${displayData.author.avatarUrl})` : 
+                            `url(/avatar1.jpg)`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center'
+                        }}
+                      ></div>
                       <span className="meta-author-name">
                         {displayData.author?.name || displayData.author}
                       </span>
