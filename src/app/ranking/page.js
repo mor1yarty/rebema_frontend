@@ -13,8 +13,31 @@ export default function Ranking() {
   const [error, setError] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    // ローカルストレージからユーザーデータを取得
+    const getUserData = () => {
+      if (typeof window !== 'undefined') {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+          try {
+            return JSON.parse(storedUserData);
+          } catch (err) {
+            console.error('ユーザーデータの解析に失敗しました:', err);
+          }
+        }
+      }
+      // ローカルストレージにデータがない場合はデフォルト値を返す
+      return {
+        name: '中村千佳',
+        department: 'デジタルマーケティング部',
+        level: 34
+      };
+    };
+
+    setUserData(getUserData());
+
     // API からランキングデータを取得する
     const fetchRankingData = async () => {
       try {
@@ -71,12 +94,6 @@ export default function Ranking() {
   // プロファイルモーダルを閉じる処理
   const handleCloseProfileModal = () => {
     setIsProfileModalOpen(false);
-  };
-
-  const userData = {
-    name: '中村千佳',
-    department: 'デジタルマーケティング部',
-    level: 34
   };
   
   // ローディング中の表示
