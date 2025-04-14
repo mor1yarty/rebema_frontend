@@ -527,7 +527,16 @@ export default function KnowledgeModal({ content, onClose }) {
                   <div className="knowledge-meta-row">
                     <span className="meta-label">作成者</span>
                     <div className="meta-author-container">
-                      <div className="meta-author-avatar"></div>
+                      <div 
+                        className="meta-author-avatar" 
+                        style={{ 
+                          backgroundImage: displayData.author?.avatarUrl ? 
+                            `url(${displayData.author.avatarUrl})` : 
+                            `url(/avatar1.jpg)`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center'
+                        }}
+                      ></div>
                       <span className="meta-author-name">
                         {displayData.author?.name || displayData.author}
                       </span>
@@ -601,7 +610,16 @@ export default function KnowledgeModal({ content, onClose }) {
                     </div>
                     <div className="comment-content">
                       <div className="comment-user">
-                        <div className="comment-avatar"></div>
+                        <div 
+                          className="comment-avatar"
+                          style={{ 
+                            backgroundImage: comment.author?.avatarUrl || comment.avatar_url ? 
+                              `url(${comment.author?.avatarUrl || comment.avatar_url})` : 
+                              `url(/avatar1.jpg)`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                          }}
+                        ></div>
                         <div className="comment-username">
                           {comment.author?.name || comment.author_name || comment.author}
                         </div>

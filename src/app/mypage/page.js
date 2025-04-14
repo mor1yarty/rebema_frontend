@@ -106,6 +106,7 @@ export default function MyPage() {
         category: METHOD_MAPPING[item.method] || '不明',
         target: TARGET_MAPPING[item.target] || '不明',
         author: item.author?.name || data.name, // 著者情報の構造が変更されているため対応
+        authorAvatar: data.avatar || '/avatar1.jpg', // ユーザーのアバター画像を追加
         views: item.views,
         createdAt: item.createdAt,
         // モーダル表示の仕様変更により、以下のフィールドは削除
@@ -267,7 +268,14 @@ export default function MyPage() {
         {/* ユーザー情報カード */}
         <div className="user-info-card">
           <div className="user-avatar-section">
-            <div className="user-avatar" />
+            <div 
+              className="user-avatar" 
+              style={{ 
+                backgroundImage: `url(${userData.avatar})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }} 
+            />
             <div className="user-name">{userData.name}</div>
             <div className="user-department">{userData.department}</div>
           </div>

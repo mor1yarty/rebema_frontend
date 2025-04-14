@@ -13,8 +13,31 @@ export default function Ranking() {
   const [error, setError] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    // ローカルストレージからユーザーデータを取得
+    const getUserData = () => {
+      if (typeof window !== 'undefined') {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+          try {
+            return JSON.parse(storedUserData);
+          } catch (err) {
+            console.error('ユーザーデータの解析に失敗しました:', err);
+          }
+        }
+      }
+      // ローカルストレージにデータがない場合はデフォルト値を返す
+      return {
+        name: '中村千佳',
+        department: 'デジタルマーケティング部',
+        level: 34
+      };
+    };
+
+    setUserData(getUserData());
+
     // API からランキングデータを取得する
     const fetchRankingData = async () => {
       try {
@@ -72,11 +95,10 @@ export default function Ranking() {
   const handleCloseProfileModal = () => {
     setIsProfileModalOpen(false);
   };
-
-  const userData = {
-    name: '中村千佳',
-    department: 'デジタルマーケティング部',
-    level: 34
+  
+  // デフォルトのアバター画像を取得する関数
+  const getDefaultAvatar = () => {
+    return '/avatar1.jpg'; // デフォルトアバター画像のパス
   };
   
   // ローディング中の表示
@@ -143,7 +165,11 @@ export default function Ranking() {
             <div className={`ranking-position ${getRankingClass(0)}`}>{topUser.position}</div>
             
             <div className="ranking-avatar-container">
-              <div className="ranking-avatar" />
+              <img 
+                className="ranking-avatar" 
+                src={topUser.avatar_url || getDefaultAvatar()} 
+                alt={`${topUser.name}のプロフィール画像`} 
+              />
             </div>
             
             <div className="top-user-info">
@@ -164,7 +190,11 @@ export default function Ranking() {
               <div className={`ranking-position ${getRankingClass(index + 1)}`}>{user.position}</div>
               
               <div className="ranking-avatar-container">
-                <div className="ranking-avatar" />
+                <img 
+                  className="ranking-avatar" 
+                  src={user.avatar_url || getDefaultAvatar()} 
+                  // alt={`${user.name}のプロフィール画像`} 
+                />
               </div>
               
               <div className="ranking-user-info">

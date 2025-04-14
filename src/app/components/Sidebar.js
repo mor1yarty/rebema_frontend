@@ -14,7 +14,8 @@ export default function Sidebar({ userData }) {
   const user = userData || {
     name: '中村千佳',
     department: 'デジタルマーケティング部',
-    level: 34
+    level: 34,
+    avatar_url: '/avatar1.jpg' // デフォルトのアバター画像パスを追加
   };
   
   const handleLogout = () => {
@@ -57,7 +58,14 @@ export default function Sidebar({ userData }) {
           onClick={() => setShowLogoutMenu(!showLogoutMenu)}
           style={{ cursor: 'pointer' }}
         >
-          <div className="profile-avatar" />
+          <div 
+            className="profile-avatar" 
+            style={{ 
+              backgroundImage: `url(${user.avatar || '/avatar1.jpg'})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }} 
+          />
           <div className="profile-info">
             <div className="profile-name-section">
               <span className="profile-name">

@@ -105,6 +105,7 @@ export default function KnowledgePage() {
         category: METHOD_MAPPING[item.method] || '不明',
         target: TARGET_MAPPING[item.target] || '不明',
         author: item.author.name,
+        authorAvatar: item.author.avatarUrl, // アバターURLを追加
         views: item.views,
         createdAt: item.createdAt,
         // KnowledgeModal用のコメントなどのダミーデータを追加
