@@ -96,6 +96,11 @@ export default function Ranking() {
     setIsProfileModalOpen(false);
   };
   
+  // デフォルトのアバター画像を取得する関数
+  const getDefaultAvatar = () => {
+    return '/avatar1.jpg'; // デフォルトアバター画像のパス
+  };
+  
   // ローディング中の表示
   if (isLoading) {
     return (
@@ -160,7 +165,11 @@ export default function Ranking() {
             <div className={`ranking-position ${getRankingClass(0)}`}>{topUser.position}</div>
             
             <div className="ranking-avatar-container">
-              <div className="ranking-avatar" />
+              <img 
+                className="ranking-avatar" 
+                src={topUser.avatar_url || getDefaultAvatar()} 
+                alt={`${topUser.name}のプロフィール画像`} 
+              />
             </div>
             
             <div className="top-user-info">
@@ -181,7 +190,11 @@ export default function Ranking() {
               <div className={`ranking-position ${getRankingClass(index + 1)}`}>{user.position}</div>
               
               <div className="ranking-avatar-container">
-                <div className="ranking-avatar" />
+                <img 
+                  className="ranking-avatar" 
+                  src={user.avatar_url || getDefaultAvatar()} 
+                  // alt={`${user.name}のプロフィール画像`} 
+                />
               </div>
               
               <div className="ranking-user-info">
