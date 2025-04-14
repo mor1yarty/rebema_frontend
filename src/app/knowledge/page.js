@@ -61,7 +61,7 @@ export default function KnowledgePage() {
       }
       
       // APIからナレッジデータを取得（キーワード検索を追加）
-      const url = new URL(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/`);
+      const url = new URL(`${process.env.NEXT_PUBLIC_ENDPOINT}/knowledge/popular/`);
       url.searchParams.append('limit', '20');
       url.searchParams.append('offset', '0');
       
