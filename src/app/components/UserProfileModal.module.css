@@ -129,6 +129,17 @@
   margin-bottom: 10px;
   background-size: cover;
   background-position: center;
+  overflow: hidden; /* 追加: 画像が丸い形状からはみ出ないようにする */
+  display: flex; /* 追加: 画像を中央配置するため */
+  justify-content: center; /* 追加: 画像を水平方向中央に */
+  align-items: center; /* 追加: 画像を垂直方向中央に */
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 追加: 画像がコンテナにフィットするように */
+  border-radius: 50%; /* 追加: 画像を丸くする */
 }
 
 .userName {

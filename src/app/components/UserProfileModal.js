@@ -15,6 +15,9 @@ const UserProfileModal = ({ isOpen, onClose, userId }) => {
   const [error, setError] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
 
+  // デフォルトのアバター画像パス
+  const defaultAvatarUrl = '/avatar1.jpg';
+
   // 次のレベルに必要な経験値を計算する関数
   const calculateNextLevelExp = (currentLevel, totalExp) => {
     const expPerLevel = 100; // 各レベルアップに必要な経験値量は100
@@ -77,7 +80,7 @@ const UserProfileModal = ({ isOpen, onClose, userId }) => {
         expBarPercentage: calculateExpBarPercentage(data.currentXp),
         knowledgeCount: data.activity?.length || 0,
         totalPageViews: data.activity?.reduce((sum, item) => sum + item.views, 0) || 0,
-        avatar: data.avatar || null,
+        avatar: data.avatar || defaultAvatarUrl, // avatarUrlを保存し、ない場合はデフォルト画像を設定
         activity: data.activity || []
       });
 
@@ -148,7 +151,13 @@ const UserProfileModal = ({ isOpen, onClose, userId }) => {
             {/* ユーザー情報カード */}
             <div className={styles.userInfoCard}>
               <div className={styles.userAvatarSection}>
-                <div className={styles.userAvatar} />
+                <div className={styles.userAvatar}>
+                  <img 
+                    src={userData.avatar || defaultAvatarUrl} 
+                    alt={`${userData.name}のプロフィール画像`}
+                    className={styles.avatarImage}
+                  />
+                </div>
                 <div className={styles.userName}>{userData.name}</div>
                 <div className={styles.userDepartment}>{userData.department}</div>
               </div>
