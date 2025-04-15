@@ -95,7 +95,7 @@ export default function CreateKnowledgeModal({ onClose, onSubmit }) {
   const targetOptions = [
     { value: '1', label: '新規ユーザー' },
     { value: '2', label: '既存ユーザー' },
-    { value: '3', label: '休眠ユーザー' }
+    { value: '3', label: '全ユーザー' }
   ];
 
   return (
