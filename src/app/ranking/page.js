@@ -168,7 +168,7 @@ export default function Ranking() {
               <img 
                 className="ranking-avatar" 
                 src={topUser.avatar_url || getDefaultAvatar()} 
-                alt={`${topUser.name}のプロフィール画像`} 
+                // alt={`${topUser.name}のプロフィール画像`} 
               />
             </div>
             
