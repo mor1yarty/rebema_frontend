@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getMethodColor, getTargetColor } from '../../constants/knowledgeConstants';
+import { getMethodColor, getTargetColor, METHOD_MAPPING, TARGET_MAPPING } from '../../constants/knowledgeConstants';
 import Toast from '../Toast';
 
 /**
@@ -466,10 +466,9 @@ export default function KnowledgeModal({ content, onClose }) {
                     onChange={handleEditChange}
                     className="form-control"
                   >
-                    <option value="1">メール</option>
-                    <option value="2">ウェブ</option>
-                    <option value="3">アプリ</option>
-                    <option value="4">その他</option>
+                    {Object.entries(METHOD_MAPPING).map(([value, label]) => (
+                      <option key={value} value={value}>{label}</option>
+                    ))}
                   </select>
                 </div>
                 
@@ -482,10 +481,9 @@ export default function KnowledgeModal({ content, onClose }) {
                     onChange={handleEditChange}
                     className="form-control"
                   >
-                    <option value="1">新規ユーザー</option>
-                    <option value="2">既存ユーザー</option>
-                    <option value="3">休眠ユーザー</option>
-                    <option value="4">全ユーザー</option>
+                    {Object.entries(TARGET_MAPPING).map(([value, label]) => (
+                      <option key={value} value={value}>{label}</option>
+                    ))}
                   </select>
                 </div>
                 
@@ -532,7 +530,7 @@ export default function KnowledgeModal({ content, onClose }) {
                         style={{ 
                           backgroundImage: displayData.author?.avatarUrl ? 
                             `url(${displayData.author.avatarUrl})` : 
-                            `url(/avatar1.jpg)`,
+                            `url(avatar1.jpg)`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center'
                         }}
@@ -554,15 +552,11 @@ export default function KnowledgeModal({ content, onClose }) {
                   {/* 配信手法行 */}
                   <div className="knowledge-meta-row">
                     <span className="meta-label">配信手法</span>
-                    <div className="meta-tag" style={{ 
-                      backgroundColor: getMethodColor(knowledgeDetail?.method || displayData.category) 
+                    <div className="category-badge" style={{ 
+                      backgroundColor: getMethodColor(METHOD_MAPPING[knowledgeDetail?.method] || displayData.category) 
                     }}>
                       <span className="meta-tag-text">
-                        {knowledgeDetail?.method ? (
-                          knowledgeDetail.method === "1" ? "メール" :
-                          knowledgeDetail.method === "2" ? "ウェブ" :
-                          knowledgeDetail.method === "3" ? "アプリ" : "その他"
-                        ) : displayData.category}
+                        {knowledgeDetail?.method ? METHOD_MAPPING[knowledgeDetail.method] : displayData.category}
                       </span>
                     </div>
                   </div>
@@ -570,15 +564,11 @@ export default function KnowledgeModal({ content, onClose }) {
                   {/* ターゲット行 */}
                   <div className="knowledge-meta-row">
                     <span className="meta-label">ターゲット</span>
-                    <div className="meta-tag" style={{ 
-                      backgroundColor: getTargetColor(knowledgeDetail?.target || displayData.target) 
+                    <div className="category-badge" style={{ 
+                      backgroundColor: getTargetColor(TARGET_MAPPING[knowledgeDetail?.target] || displayData.target) 
                     }}>
                       <span className="meta-tag-text">
-                        {knowledgeDetail?.target ? (
-                          knowledgeDetail.target === "1" ? "新規ユーザー" :
-                          knowledgeDetail.target === "2" ? "既存ユーザー" :
-                          knowledgeDetail.target === "3" ? "休眠ユーザー" : "全ユーザー"
-                        ) : displayData.target}
+                        {knowledgeDetail?.target ? TARGET_MAPPING[knowledgeDetail.target] : displayData.target}
                       </span>
                     </div>
                   </div>
@@ -615,7 +605,7 @@ export default function KnowledgeModal({ content, onClose }) {
                           style={{ 
                             backgroundImage: comment.author?.avatarUrl || comment.avatar_url ? 
                               `url(${comment.author?.avatarUrl || comment.avatar_url})` : 
-                              `url(/avatar1.jpg)`,
+                              `url(avatar1.jpg)`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center'
                           }}

@@ -96,7 +96,7 @@ export default function MyPage() {
         expBarPercentage: calculateExpBarPercentage(data.currentXp), // 経験値バーの進捗率を計算
         knowledgeCount: data.activity?.length || 0,
         totalPageViews: data.activity?.reduce((sum, item) => sum + item.views, 0) || 0,
-        avatar: data.avatar || '/avatar1.jpg'
+        avatar: data.avatar || 'avatar1.jpg'
       });
 
       // 知識データを活動履歴から変換
@@ -106,7 +106,7 @@ export default function MyPage() {
         category: METHOD_MAPPING[item.method] || '不明',
         target: TARGET_MAPPING[item.target] || '不明',
         author: item.author?.name || data.name, // 著者情報の構造が変更されているため対応
-        authorAvatar: data.avatar || '/avatar1.jpg', // ユーザーのアバター画像を追加
+        authorAvatar: data.avatar || 'avatar1.jpg', // ユーザーのアバター画像を追加
         views: item.views,
         createdAt: item.createdAt,
         // モーダル表示の仕様変更により、以下のフィールドは削除

@@ -98,7 +98,7 @@ export default function Ranking() {
   
   // デフォルトのアバター画像を取得する関数
   const getDefaultAvatar = () => {
-    return '/avatar1.jpg'; // デフォルトアバター画像のパス
+    return 'avatar1.jpg'; // デフォルトアバター画像のパス
   };
   
   // ローディング中の表示
@@ -168,7 +168,7 @@ export default function Ranking() {
               <img 
                 className="ranking-avatar" 
                 src={topUser.avatar_url || getDefaultAvatar()} 
-                alt={`${topUser.name}のプロフィール画像`} 
+                // alt={`${topUser.name}のプロフィール画像`} 
               />
             </div>
             
