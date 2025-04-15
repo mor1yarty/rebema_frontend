@@ -532,7 +532,7 @@ export default function KnowledgeModal({ content, onClose }) {
                         style={{ 
                           backgroundImage: displayData.author?.avatarUrl ? 
                             `url(${displayData.author.avatarUrl})` : 
-                            `url(/avatar1.jpg)`,
+                            `url(avatar1.jpg)`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center'
                         }}
@@ -615,7 +615,7 @@ export default function KnowledgeModal({ content, onClose }) {
                           style={{ 
                             backgroundImage: comment.author?.avatarUrl || comment.avatar_url ? 
                               `url(${comment.author?.avatarUrl || comment.avatar_url})` : 
-                              `url(/avatar1.jpg)`,
+                              `url(avatar1.jpg)`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center'
                           }}

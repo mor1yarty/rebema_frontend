@@ -18,7 +18,7 @@ const UserProfileModal = ({ isOpen, onClose, userId }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   // デフォルトのアバター画像パス
-  const defaultAvatarUrl = '/avatar1.jpg';
+  const defaultAvatarUrl = 'avatar1.jpg';
 
   // 次のレベルに必要な経験値を計算する関数
   const calculateNextLevelExp = (currentLevel, totalExp) => {
